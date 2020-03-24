@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Location Finder</title>
+          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" /> 	
+	<style> 
+  	body {
+	    	padding: 0%;
+	    	margin: 0;
+		}
+		html, body, #map {
+    		height: 98%;
+		}
+		.info {
+      padding: 6px 8px;
+      font: 14px/16px Arial, Helvetica, sans-serif;
+      background: white;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+    }
+    
+    .info h4 {
+      margin: 0 0 5px;
+      color: #777;
+    }
+  
+	</style> 
+	<style type="text/css">
+      .leaflet-control-attribution{
+        display: none;
+      }
+    </style>
+</head>  
+<body onload="Function()">
+	<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+	<script src="geojsonfile.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.1.0/dist/MarkerCluster.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.1.0/dist/MarkerCluster.Default.css" />
+	<script src="https://unpkg.com/leaflet.markercluster@1.1.0/dist/leaflet.markercluster.js"></script>
+	
+	<div id="panel" align="center", style =  "margin-left: 10px; margin-right: 15px; background-color:#FFFFFF;">
+					<label>Explore Options, Select a APP</label>
+					<select id="API" onchange="styleSelect()">
+					  <option value="TODOS" >Todos</option>
+					  <option value="TripAdvisor" >Trip Advisor</option>
+					  <option value="Twitter">Twitter</option>
+					  <option value="Yelp" >Yelp</option>
+					  <option value="Instagram">Instagram</option>
+					</select>
+		</div>	  
+ <div id="panel1" align="center", style =  "background-color:#FFFFFF;">
+					<label>Explore Places, Select a Category</label>
+					<select id="category" onchange="categorySelect()">
+					<option value="TODOS">Todos</option>
+					 <option value="Restaurante" >Restaurante</option>
+					 <option value="Bar" >Bar</option>
+					 <option value="Restaurante Bar">Restaurante Bar</option>
+					</select>
+		</div>
+	<div id = 'map'></div>
+	<div style="margin: 0 auto; text-align: center;">
+ 
+<script>
+	var movil = false;
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+           movil = true;
+        }
+	var map = L.map('map', {
+		zoom: 15,
+	});
+	L.control.scale().addTo(map);
+ 
+	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',}).addTo(map);
+	L.Control.Watermark = L.Control.extend({
+		onAdd: function(map) {
+        var img = L.DomUtil.create('img');
+        img.src = 'image.jpg';
+        img.style.width = '200px';
+
+        return img;
+    }
+	});
+
+	L.control.watermark = function(opts) {
+    return new L.Control.Watermark(opts);
+	}
+
+L.control.watermark({ position: 'topright' }).addTo(map);
+	
+	var location_finder = L.layerGroup().addTo(map);
+	var marker_location_finder = L.markerClusterGroup();
+		marker_location_finder.addLayer(marker_location_finder);
+		map.addLayer(marker_location_finder); 
+		location_finder.clearLayers();
+		location_finder.addLayer(marker_location_finder);
+		map.fitBounds(marker_location_finder.getBounds());
+	 
+	 		function colorPoints(cp) { 
+				return cp == "TripAdvisor" ? '#FF0000' : 
+				cp == "Instagram" ? '#FFA500' :
+				cp == "Yelp" ? '#008000' :
+				cp == "Twitter" ? '#0000FF' :
+								'#000000'; 
+				};
+			function colorCategory(v) { 
+				return v == "Restaurante" ? '#FFFF00' : 
+				v == "Bar" ? '#00FFFF' :
+				v == "Restaurante Bar" ? '#006400' :
+								'#000000'; 
+				};
+ 
+				function style_markers(feature) {
+					return{
+						radius: feature.properties.score,
+						label: feature.properties.name,
+						fillColor: colorPoints(feature.properties.API), 
+			    		color: colorPoints(feature.properties.API), 
+						weight: 1,
+						opacity : 1,
+						fillOpacity : 0.8
+					};
+				};
+				function style_markers_category(feature) {
+					return{
+						radius: feature.properties.score,
+						label: feature.properties.name,
+						fillColor: colorCategory(feature.properties.category), 
+			    		color: colorCategory(feature.properties.category), 
+						weight: 1,
+						opacity : 1,
+						fillOpacity : 0.8
+					};
+				};
+				
+				function popup_markers (feature, layer) {
+					layer.bindPopup("<h5></div><hr><table><tr><td>Place Name: "+feature.properties.name +
+					//"<h5></div><hr><table><tr><td>Latitude: "+feature.properties.lat + "<h5>Longitude: "+ feature.properties.lng +
+					"<h4></div><hr><table><tr><td>Parameter IT: "+feature.properties.InstagramReviews + "<h4>Parameter TW: "+ feature.properties.TwitterReviews + "<h4>Parameter YP: "+ feature.properties.YelpReviews +"<h4>Parameter TA: "+ feature.properties.TripAdvisorReviews +
+					"<h4></div><hr><table><tr><td>City: "+feature.properties.city + "<h4>Category: "+ feature.properties.category + "<h4>Subcategory: "+ feature.properties.subcategory + "<h4>App: "+ feature.properties.API,
+			        {minWidth: 150, maxWidth: 200});				
+					};
+ 
+				var MarkerOptions = {
+				    radius: 8,
+					label: feature.properties.name,
+				    fillColor: "#ff7800",
+				    color: "#000",
+				    weight: 1,
+				    opacity: 1,
+				    fillOpacity: 0.8
+					};
+ 
+	function Function() { 
+			 	var places = L.geoJSON(marker, {
+							pointToLayer: function (feature, latlng) {
+									return L.circleMarker(latlng, MarkerOptions);
+								},	
+							style:style_markers,
+							onEachFeature: popup_markers	
+					});		
+ 
+			 	location_finder.addLayer(places);	
+	var markersFunction = L.markerClusterGroup();
+		markersFunction.addLayer(places);
+		map.addLayer(markersFunction); 
+		location_finder.clearLayers();
+		location_finder.addLayer(markersFunction);
+		map.fitBounds(markersFunction.getBounds());
+	}
+
+	function styleSelect() {
+		var mySelect = document.getElementById("API").value;
+		
+		var selectedPlaces = L.geoJSON(marker, {
+							pointToLayer: function (feature, latlng) {
+									return L.circleMarker(latlng, MarkerOptions);
+								},
+							filter: function(feature, layer) {								
+								 if(mySelect == "TODOS")		
+									return (mySelect ==  "TODOS");
+								else
+									return (mySelect == feature.properties.API);
+							},	
+							style:style_markers,
+							onEachFeature: popup_markers
+							
+					});
+		
+		var markerselected = selectedPlaces;
+		location_finder.addLayer(markerselected);
+		var markers = L.markerClusterGroup();
+		markers.addLayer(selectedPlaces);
+		map.addLayer(markers); 
+		location_finder.clearLayers();
+		location_finder.addLayer(markers);
+		map.fitBounds(markers.getBounds());
+	}
+	function categorySelect() {
+		var category = document.getElementById("category").value;
+		var placesCategory = L.geoJSON(marker, {
+							pointToLayer: function (feature, latlng) {
+									return L.circleMarker(latlng, MarkerOptions);
+								},
+							filter: function(feature, layer) {								
+								 if(categorySelect == "TODOS")		
+									return (categorySelect == "TODOS");
+								else
+									return (feature.properties.category == category);
+							},	
+							style:style_markers_category,
+							onEachFeature: popup_markers,
+							
+					});
+	
+	var markersCategory = L.markerClusterGroup();
+		markersCategory.addLayer(placesCategory);
+		map.addLayer(markersCategory); 
+		location_finder.clearLayers();
+		location_finder.addLayer(markersCategory);
+		map.fitBounds(markersCategory.getBounds());
+	}
+	
+</script>
+ 
+</body>
+</html>
