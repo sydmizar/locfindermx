@@ -48,24 +48,24 @@ def init_apis(database='local'):
 def search_apis(near=None, query=None, radius=1000):
     global fs_client, yp_client, gp_client, dn_client, tb_client
     print('Starting Search\nFoursquare...', end='')
-    fs_df = fs_client.explore_venuesEP(near=near, query=query, radius=radius)
+    #fs_df = fs_client.explore_venuesEP(near=near, query=query, radius=radius)
     print('Finished\nYelp...', end='')
-    yp_df = yp_client.business_Tab(term=query, location=near, radius=radius)
+    #yp_df = yp_client.business_Tab(term=query, location=near, radius=radius)
     print('Finished\nGoogle Places...', end='')
-    gp_df = gp_client.search_places(keyword=query, near=near, radius=radius)
+    #gp_df = gp_client.search_places(keyword=query, near=near, radius=radius)
     print('Finished')
     # dn_df = dn_client
     # tb_df = tb_client
 
     # return pd.concat([fs_df, yp_df], axis=0, ignore_index=True)
-    return fs_df
+    # return fs_df
 
 
 if __name__ == "__main__":
     init_apis('local')
-    # editor = apis.TableEditor(conn)
-    # editor.erase_tables('all')
-    # editor.create_tables('all')
+    editor = apis.TableEditor(conn)
+    editor.erase_tables('yelp')
+    editor.create_tables('yelp')
 
     kwords = [
         'cerveza',
@@ -90,7 +90,9 @@ if __name__ == "__main__":
     ]
 
     for kw in kwords:
-        search_apis(near='Ciudad de Mexico', query='hamburguesas', radius=2000)
+        search_apis(near='Ciudad de Mexico', query=kw, radius=2000)
 
     # Si todo corre bien, la siguiente linea carga los datos a csv por tabla.
     apis.get_table_data()
+
+
