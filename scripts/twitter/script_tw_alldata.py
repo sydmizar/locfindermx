@@ -290,7 +290,10 @@ for searched_tweets in final_tweets[0]:
     if('hashtags' in searched_tweets['entities']):
         for hashtag in searched_tweets['entities']['hashtags']:
             if 'text' in hashtag:
-                hashtags = hashtags + ',' + hashtag['text']
+                if hashtags == '':
+                    hashtags = hashtag['text']
+                else:
+                    hashtags = hashtags + ',' + hashtag['text']
 
     data = data.append({'created_at': created_at, 'id': id, 'id_str': id_str, 'text': text, 'truncated': truncated, 
                      'source': source, 'in_reply_to_status_id': in_reply_to_status_id, 'in_reply_to_status_id_str': in_reply_to_status_id_str, 
@@ -312,6 +315,8 @@ for searched_tweets in final_tweets[0]:
                      'place_type': place_type, 'place_url': place_url, 'user_created_at': user_created_at, 'description': description, 
                      'user_id': user_id, 'user_id_str': user_id_str, 'location': location, 'name': name, 'screen_name': screen_name, 
                      'hashtags': hashtags}, ignore_index = True)
+    
+data.to_csv('data_tw_alldata.csv', index = False, encoding = 'utf-8-sig')
  
 """    	data = data.append({'created_at': searched_tweets['created_at'], 'id_str': searched_tweets['id_str'], 'text': searched_tweets['text'], 'truncated': searched_tweets['truncated'], 
                          'source': searched_tweets['source'], 'in_reply_to_status_id': searched_tweets['in_reply_to_status_id'], 'in_reply_to_status_id_str': searched_tweets['in_reply_to_status_id_str'], 
