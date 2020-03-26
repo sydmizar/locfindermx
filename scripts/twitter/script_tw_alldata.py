@@ -37,15 +37,28 @@ for query in keywords.split(","):
     searched_tweets = [status._json for status in tweepy.Cursor(api.search, q=query + '+place:%s' % place_id, result_type = result_type, since= date_since, until= date_until, lang = "es").items(1000)]
     final_tweets.append(searched_tweets)
 
-data = pd.DataFrame(columns = ['created_at', 'id', 'id_str', 'text', 'truncated', 'source', 'in_reply_to_status_id', 
-                               'in_reply_to_status_id_str', 'in_reply_to_user_id', 'in_reply_to_user_id_str', 'in_reply_to_screen_name', 
-                               'protected', 'followers_count', 'friends_count', 'favourites_count', 'utc_offset', 'time_zone', 'geo_enabled', 
-                               'verified', 'statuses_count', 'lang', 'contributors_enabled', 'is_translator', 'is_translation_enabled', 'profile_background_color', 
-                               'profile_background_image_url', 'profile_background_image_url_https', 'profile_background_tile', 'profile_image_url', 'profile_image_url_https', 
-                               'profile_banner_url', 'profile_link_color', 'profile_sidebar_border_color', 'profile_sidebar_fill_color', 'profile_text_color', 'profile_use_background_image', 
-                               'has_extended_profile', 'default_profile', 'default_profile_image', 'following', 'follow_request_sent', 'notifications', 'geo', 'coordinates', 'listed_count', 
-                               'verified', 'place', 'contributors', 'is_quote_status', 'retweet_count', 'favorite_count', 'favorited', 'retweeted', 'possibly_sensitive'])
-
+data = pd.DataFrame(columns = ['created_at', 'id', 'id_str', 'text', 'truncated', 'source', 
+                               'in_reply_to_status_id', 'in_reply_to_status_id_str', 
+                               'in_reply_to_user_id', 'in_reply_to_user_id_str', 
+                               'in_reply_to_screen_name', 'protected', 'followers_count', 
+                               'friends_count', 'favourites_count', 'utc_offset', 'time_zone', 
+                               'geo_enabled', 'verified', 'statuses_count', 'lang', 
+                               'contributors_enabled', 'is_translator', 'is_translation_enabled', 
+                               'profile_background_color', 'profile_background_image_url', 
+                               'profile_background_image_url_https', 'profile_background_tile', 
+                               'profile_image_url', 'profile_image_url_https', 
+                               'profile_banner_url', 'profile_link_color', 
+                               'profile_sidebar_border_color', 'profile_sidebar_fill_color', 
+                               'profile_text_color', 'profile_use_background_image', 
+                               'has_extended_profile', 'default_profile', 'default_profile_image', 
+                               'following', 'follow_request_sent', 'notifications', 'geo', 
+                               'coordinates', 'listed_count', 
+                               'verified', 'contributors', 'is_quote_status', 'retweet_count', 
+                               'favorite_count', 'favorited', 'retweeted', 'possibly_sensitive',
+                               'attributes', 'bounding_box', 'contained_within', 'country', 
+                               'country_code', 'full_name', 'tweet_place_id', 'place_name', 
+                               'place_type', 'place_url', 'user_created_at', 'description', 
+                               'user_id', 'user_id_str', 'location', 'name', 'screen_name', 'hashtags'])
 
 for searched_tweets in final_tweets[0]:
     created_at= '' 
@@ -94,7 +107,7 @@ for searched_tweets in final_tweets[0]:
     coordinates= '' 
     listed_count= '' 
     verified= '' 
-    place= '' 
+    #place= '' 
     contributors= '' 
     is_quote_status= '' 
     retweet_count= '' 
@@ -102,6 +115,30 @@ for searched_tweets in final_tweets[0]:
     favorited= '' 
     retweeted= '' 
     possibly_sensitive= ''
+    
+    # PLACE ATTRIBUTES
+    attributes = ''
+    bounding_box = ''
+    contained_within = ''
+    country = ''
+    country_code = ''
+    full_name = ''
+    tweet_place_id = ''
+    place_name = ''
+    place_type = ''
+    place_url = ''
+    
+    # USER ATTRIBUTES
+    user_created_at = ''
+    description = ''
+    user_id = ''
+    user_id_str = ''
+    location = ''
+    name = ''
+    screen_name = ''
+    
+    # ENTITIES ATTRIBUTES
+    hashtags = ''
     
     if ('created_at' in searched_tweets):
         created_at = searched_tweets['created_at'] 
@@ -125,78 +162,81 @@ for searched_tweets in final_tweets[0]:
         in_reply_to_user_id_str = searched_tweets['in_reply_to_user_id_str'] 
     if ('in_reply_to_screen_name' in searched_tweets): 
         in_reply_to_screen_name = searched_tweets['in_reply_to_screen_name'] 
-    if ('protected' in searched_tweets): 
-        protected = searched_tweets['protected'] 
-    if ('followers_count' in searched_tweets): 
-        followers_count = searched_tweets['followers_count'] 
-    if ('friends_count' in searched_tweets): 
-        friends_count = searched_tweets['friends_count'] 
-    if ('favourites_count' in searched_tweets): 
-        favourites_count = searched_tweets['favourites_count'] 
-    if ('utc_offset' in searched_tweets): 
-        utc_offset = searched_tweets['utc_offset']
-    if ('time_zone' in searched_tweets): 
-        time_zone = searched_tweets['time_zone'] 
-    if ('geo_enabled' in searched_tweets): 
-        geo_enabled = searched_tweets['geo_enabled'] 
+    if ('protected' in searched_tweets['user']): 
+        protected = searched_tweets['user']['protected'] 
+    if ('followers_count' in searched_tweets['user']): 
+        followers_count = searched_tweets['user']['followers_count'] 
+    if ('friends_count' in searched_tweets['user']): 
+        friends_count = searched_tweets['user']['friends_count'] 
+    if ('favourites_count' in searched_tweets['user']): 
+        favourites_count = searched_tweets['user']['favourites_count'] 
+    if ('utc_offset' in searched_tweets['user']): 
+        utc_offset = searched_tweets['user']['utc_offset']
+    if ('time_zone' in searched_tweets['user']): 
+        time_zone = searched_tweets['user']['time_zone'] 
+    if ('geo_enabled' in searched_tweets['user']): 
+        geo_enabled = searched_tweets['user']['geo_enabled'] 
     if ('verified' in searched_tweets): 
         verified = searched_tweets['verified'] 
-    if ('statuses_count' in searched_tweets): 
-        statuses_count = searched_tweets['statuses_count']
+    if ('statuses_count' in searched_tweets['user']): 
+        statuses_count = searched_tweets['user']['statuses_count']
     if ('lang' in searched_tweets): 
         lang = searched_tweets['lang']
-    if ('contributors_enabled' in searched_tweets): 
-        contributors_enabled = searched_tweets['contributors_enabled'] 
-    if ('is_translator' in searched_tweets): 
-        is_translator = searched_tweets['is_translator'] 
+        
+    if ('contributors_enabled' in searched_tweets['user']): 
+        contributors_enabled = searched_tweets['user']['contributors_enabled'] 
+    if ('is_translator' in searched_tweets['user']): 
+        is_translator = searched_tweets['user']['is_translator'] 
     if ('is_translation_enabled' in searched_tweets): 
         is_translation_enabled = searched_tweets['is_translation_enabled'] 
-    if ('profile_background_color' in searched_tweets): 
-        profile_background_color = searched_tweets['profile_background_color']
-    if ('profile_background_image_url' in searched_tweets): 
-        profile_background_image_url = searched_tweets['profile_background_image_url'] 
-    if ('profile_background_image_url_https' in searched_tweets): 
-        profile_background_image_url_https = searched_tweets['profile_background_image_url_https'] 
-    if ('profile_background_tile' in searched_tweets): 
-        profile_background_tile = searched_tweets['profile_background_tile'] 
-    if ('profile_image_url' in searched_tweets): 
-        profile_image_url = searched_tweets['profile_image_url'] 
-    if ('profile_image_url_https' in searched_tweets): 
-        profile_image_url_https = searched_tweets['profile_image_url_https'] 
-    if ('profile_banner_url' in searched_tweets): 
-        profile_banner_url = searched_tweets['profile_banner_url'] 
-    if ('profile_link_color' in searched_tweets): 
-        profile_link_color = searched_tweets['profile_link_color'] 
-    if ('profile_sidebar_border_color' in searched_tweets): 
-        profile_sidebar_border_color = searched_tweets['profile_sidebar_border_color'] 
-    if ('profile_sidebar_fill_color' in searched_tweets): 
-        profile_sidebar_fill_color = searched_tweets['profile_sidebar_fill_color'] 
-    if ('profile_text_color' in searched_tweets): 
-        profile_text_color = searched_tweets['profile_text_color'] 
-    if ('profile_use_background_image' in searched_tweets): 
-        profile_use_background_image = searched_tweets['profile_use_background_image'] 
-    if ('has_extended_profile' in searched_tweets): 
-        has_extended_profile = searched_tweets['has_extended_profile'] 
-    if ('default_profile' in searched_tweets): 
-        default_profile = searched_tweets['default_profile'] 
-    if ('default_profile_image' in searched_tweets): 
-        default_profile_image = searched_tweets['default_profile_image'] 
-    if ('following' in searched_tweets): 
-        following = searched_tweets['following'] 
-    if ('follow_request_sent' in searched_tweets): 
-        follow_request_sent = searched_tweets['follow_request_sent'] 
-    if ('notifications' in searched_tweets): 
-        notifications = searched_tweets['notifications'] 
+    if ('profile_background_color' in searched_tweets['user']): 
+        profile_background_color = searched_tweets['user']['profile_background_color']
+    if ('profile_background_image_url' in searched_tweets['user']): 
+        profile_background_image_url = searched_tweets['user']['profile_background_image_url'] 
+    if ('profile_background_image_url_https' in searched_tweets['user']): 
+        profile_background_image_url_https = searched_tweets['user']['profile_background_image_url_https'] 
+    if ('profile_background_tile' in searched_tweets['user']): 
+        profile_background_tile = searched_tweets['user']['profile_background_tile'] 
+    if ('profile_image_url' in searched_tweets['user']): 
+        profile_image_url = searched_tweets['user']['profile_image_url'] 
+    if ('profile_image_url_https' in searched_tweets['user']): 
+        profile_image_url_https = searched_tweets['user']['profile_image_url_https'] 
+    if ('profile_banner_url' in searched_tweets['user']): 
+        profile_banner_url = searched_tweets['user']['profile_banner_url'] 
+    if ('profile_link_color' in searched_tweets['user']): 
+        profile_link_color = searched_tweets['user']['profile_link_color'] 
+    if ('profile_sidebar_border_color' in searched_tweets['user']): 
+        profile_sidebar_border_color = searched_tweets['user']['profile_sidebar_border_color'] 
+    if ('profile_sidebar_fill_color' in searched_tweets['user']): 
+        profile_sidebar_fill_color = searched_tweets['user']['profile_sidebar_fill_color'] 
+    if ('profile_text_color' in searched_tweets['user']): 
+        profile_text_color = searched_tweets['user']['profile_text_color'] 
+    if ('profile_use_background_image' in searched_tweets['user']): 
+        profile_use_background_image = searched_tweets['user']['profile_use_background_image'] 
+    if ('has_extended_profile' in searched_tweets['user']): 
+        has_extended_profile = searched_tweets['user']['has_extended_profile'] 
+        
+    if ('default_profile' in searched_tweets['user']): 
+        default_profile = searched_tweets['user']['default_profile'] 
+    if ('default_profile_image' in searched_tweets['user']): 
+        default_profile_image = searched_tweets['user']['default_profile_image'] 
+    if ('following' in searched_tweets['user']): 
+        following = searched_tweets['user']['following'] 
+    if ('follow_request_sent' in searched_tweets['user']): 
+        follow_request_sent = searched_tweets['user']['follow_request_sent'] 
+    if ('notifications' in searched_tweets['user']): 
+        notifications = searched_tweets['user']['notifications'] 
     if ('geo' in searched_tweets): 
         geo = searched_tweets['geo'] 
     if ('coordinates' in searched_tweets): 
         coordinates = searched_tweets['coordinates'] 
-    if ('listed_count' in searched_tweets): 
-        listed_count = searched_tweets['listed_count'] 
-    if ('verified' in searched_tweets): 
-        verified = searched_tweets['verified'] 
-    if ('place' in searched_tweets): 
-        place = searched_tweets['place']
+    if ('listed_count' in searched_tweets['user']): 
+        listed_count = searched_tweets['user']['listed_count'] 
+    if ('verified' in searched_tweets['user']): 
+        verified = searched_tweets['user']['verified'] 
+    #if ('place' in searched_tweets): 
+    #    place = searched_tweets['place']
+        
     if ('contributors' in searched_tweets): 
         contributors = searched_tweets['contributors'] 
     if ('is_quote_status' in searched_tweets): 
@@ -211,6 +251,46 @@ for searched_tweets in final_tweets[0]:
         retweeted = searched_tweets['retweeted'] 
     if ('possibly_sensitive' in searched_tweets):
         possibly_sensitive = searched_tweets['possibly_sensitive']
+        
+    if('attributes' in searched_tweets['place']):
+        attributes = searched_tweets['place']['attributes']
+    if('bounding_box' in searched_tweets['place']):
+        bounding_box = searched_tweets['place']['bounding_box']
+    if('contained_within' in searched_tweets['place']):
+        contained_within = searched_tweets['place']['contained_within']
+    if('country' in searched_tweets['place']):
+        country = searched_tweets['place']['country']
+    if('country_code' in searched_tweets['place']):
+        country_code = searched_tweets['place']['country_code']
+    if('full_name' in searched_tweets['place']):
+        full_name = searched_tweets['place']['full_name']
+    if('id' in searched_tweets['place']):
+        tweet_place_id = searched_tweets['place']['id']
+    if('name' in searched_tweets['place']):
+        place_name = searched_tweets['place']['name']
+    if('place_type' in searched_tweets['place']):
+        place_type = searched_tweets['place']['place_type']
+    if('url' in searched_tweets['place']):
+        place_url = searched_tweets['place']['url']
+        
+    if('created_at' in searched_tweets['user']):
+        user_created_at = searched_tweets['user']['created_at']
+    if('description' in searched_tweets['user']):
+        description = searched_tweets['user']['description']
+    if('id' in searched_tweets['user']):
+        user_id = searched_tweets['user']['id']
+    if('id_str' in searched_tweets['user']):
+        user_id_str = searched_tweets['user']['id_str']
+    if('location' in searched_tweets['user']):
+        location = searched_tweets['user']['location']
+    if('name' in searched_tweets['user']):
+        name = searched_tweets['user']['name']
+    if('screen_name' in searched_tweets['user']):
+        screen_name = searched_tweets['user']['screen_name']
+    if('hashtags' in searched_tweets['entities']):
+        for hashtag in searched_tweets['entities']['hashtags']:
+            if 'text' in hashtag:
+                hashtags = hashtags + ',' + hashtag['text']
 
     data = data.append({'created_at': created_at, 'id': id, 'id_str': id_str, 'text': text, 'truncated': truncated, 
                      'source': source, 'in_reply_to_status_id': in_reply_to_status_id, 'in_reply_to_status_id_str': in_reply_to_status_id_str, 
@@ -224,8 +304,14 @@ for searched_tweets in final_tweets[0]:
                      'profile_sidebar_fill_color': profile_sidebar_fill_color, 'profile_text_color': profile_text_color, 'profile_use_background_image': profile_use_background_image, 
                      'has_extended_profile': has_extended_profile, 'default_profile': default_profile, 'default_profile_image': default_profile_image, 'following': following, 
                      'follow_request_sent': follow_request_sent, 'notifications': notifications, 'geo': geo, 'coordinates': coordinates, 
-                     'place': place, 'contributors': contributors, 'is_quote_status': is_quote_status, 
-                     'retweet_count': retweet_count, 'favorite_count': favorite_count, 'favorited': favorited, 'retweeted': retweeted, 'possibly_sensitive': possibly_sensitive}, ignore_index = True)
+                     'contributors': contributors, 'is_quote_status': is_quote_status, 
+                     'retweet_count': retweet_count, 'favorite_count': favorite_count, 'favorited': favorited, 'retweeted': retweeted, 
+                     'possibly_sensitive': possibly_sensitive, 'attributes': attributes, 
+                     'bounding_box': bounding_box, 'contained_within': contained_within, 'country': country, 
+                     'country_code': country_code, 'full_name': full_name, 'tweet_place_id': tweet_place_id, 'place_name': place_name, 
+                     'place_type': place_type, 'place_url': place_url, 'user_created_at': user_created_at, 'description': description, 
+                     'user_id': user_id, 'user_id_str': user_id_str, 'location': location, 'name': name, 'screen_name': screen_name, 
+                     'hashtags': hashtags}, ignore_index = True)
  
 """    	data = data.append({'created_at': searched_tweets['created_at'], 'id_str': searched_tweets['id_str'], 'text': searched_tweets['text'], 'truncated': searched_tweets['truncated'], 
                          'source': searched_tweets['source'], 'in_reply_to_status_id': searched_tweets['in_reply_to_status_id'], 'in_reply_to_status_id_str': searched_tweets['in_reply_to_status_id_str'], 
