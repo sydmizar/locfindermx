@@ -180,9 +180,9 @@ tmbl_columns_blog_tags = np.array([
 
 # Tablas Google Places
 # tb_gp_places
-gp_column_places = np.array([
-    ('id',              '',         'VARCHAR(25) PRIMARY KEY'),  #1 String
-    ('place_id',        '',         'text'),  #2 String
+gp_columns_places = np.array([
+    ('id',              '',         'VARCHAR(25)'),  #1 String
+    ('place_id',        '',         'VARCHAR(25) PRIMARY KEY'),  #2 String
     ('plus_code',       {},         'json'),  #3 Dict
     ('name',            '',         'text'),  #4 String
     ('price_level',     None,       'numeric'),  #5 Int

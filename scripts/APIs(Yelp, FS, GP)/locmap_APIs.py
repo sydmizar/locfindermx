@@ -1,9 +1,11 @@
 from global_vars import *
+from pprint import pprint
 import sqlalchemy
 import pandas as pd
 import numpy as np
 import requests
 import json
+import sys
 
 ################################################################################
 #  >  TABLE EDITOR
@@ -93,7 +95,7 @@ def get_table_data(conn, primary_keys, table_name):
 
 
 def get_latlon(near):
-    geocod = geolocataor.geocode(near)
+    geocod = geolocator.geocode(near)
     return geocod.latitude, geocod.longitude
 
 
@@ -164,15 +166,18 @@ class Foursquare():
             return
         venues_id = list()
         while True:
-            response = requests.get(endpoint_url, params=params).json()['response']
-            for item in response['groups'][0]['items']:
-                if item['venue']['id'] not in venues_id:
-                    venues_id.append(item['venue']['id'])
-            if len(response['groups'][0]['items']) < 50:
-                break
-            params['offset'] = 50
-        self.latest_venues = venues_id
-
+            try:
+                res = requests.get(endpoint_url, params=params).json()
+                for item in res['response']['groups'][0]['items']:
+                    if item['venue']['id'] not in venues_id:
+                        venues_id.append(item['venue']['id'])
+                if len(res['response']['groups'][0]['items']) < 50:
+                    break
+                params['offset'] = 50
+            except KeyError:
+                pprint(res)
+                raise KeyError
+        print('\tFS Venues Loaded')
         display_df = self.venues_DFbuilder(venues_id)
         self.lists_DFbuilder(venues_id)
         self.tips_DFbuilder(venues_id)
@@ -459,3 +464,64 @@ class Yelp():
                           con=self.dbengine,
                           if_exists='append',
                           method='multi')
+
+
+class GooglePlaces():
+    def __init__(self, dbengine, conn, api_key="AIzaSyBKsZ5sZW_1VouFlIxGGeZgCUDjPAG_6sI"):
+        self.api_key = api_key
+        self.engine = dbengine
+        self.conn = conn
+
+    def search_places(self, keyword, gtype=None, ll=None, near=None, radius=1000):
+        """
+        type :: <string> 'restaurant' - Restringe la búsqueda a quienes cumplan con el tipo.
+        ll :: <string> '1.32426,-90.1532' - Latitud y Longitud en forma de string separados por una coma.
+        radius :: <integer> 1000 - Radio en metros del punto de búsqueda, MAX = 50,000
+        """
+
+        endpoint_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+        params = {
+            'key': self.api_key,
+            'keyword': keyword,
+            'radius': radius
+        }
+        if gtype:
+            params['type'] = gtype
+        if near:
+            lat, lon = get_latlon(near)
+            params['location'] = f'{lat},{lon}'
+        elif ll:
+            params['location'] = ll
+        else:
+            print('Debe definir una ubicación para la búsqueda.')
+            raise NoLocationDefined
+
+        places = list()
+        while True:
+            try:
+                res = requests.get(endpoint_url, params=params).json()
+                places.extend(res['results'])
+                params['pagetoken'] = res['next_page_token']
+            except KeyError:
+                break
+        SQL_query = "SELECT id FROM tb_gp_places"
+        registered_ids = list(pd.read_sql_query(SQL_query, self.conn).id)
+        upload_df = pd.DataFrame(columns=gp_columns_places[:, KEY_NAME])
+        for place in places:
+            if place['id'] not in registered_ids:
+                data = dict()
+                for sec in gp_columns_places:
+                    try:
+                        if type(sec[NULL_VAL]) in [list, dict]:
+                            data[sec[KEY_NAME]] = json.dumps(place[sec[KEY_NAME]])
+                        else:
+                            data[sec[KEY_NAME]] = [place[sec[KEY_NAME]]]
+                    except KeyError:
+                        data[sec[KEY_NAME]] = [sec[NULL_VAL]]
+                upload_df = upload_df.append(pd.DataFrame(data), ignore_index=True)
+        print(upload_df)
+        upload_df.to_sql('tb_gp_places',
+                         con=self.engine,
+                         index=False,
+                         if_exists='append',
+                         method='multi')
