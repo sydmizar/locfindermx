@@ -110,7 +110,10 @@ def row_builder(data, columns_data):
         except KeyError:
             data[sec[KEY_NAME]] = [sec[NULL_VAL]]
     return row
+<<<<<<< HEAD:scripts/APIs(Yelp, FS, GP)/locmap_APIs_v2.py
 
+=======
+>>>>>>> master:scripts/APIs(Yelp, FS, GP)/locmap_APIs.py
 
 ################################################################################
 #  >  API OBJECTS DEFINITION
@@ -439,8 +442,15 @@ class Yelp():
 
 
 class GooglePlaces():
+<<<<<<< HEAD:scripts/APIs(Yelp, FS, GP)/locmap_APIs_v2.py
     def __init__(self,api_key="AIzaSyBKsZ5sZW_1VouFlIxGGeZgCUDjPAG_6sI"):
         self.api_key = api_key
+=======
+    def __init__(self, dbengine, conn, api_key="AIzaSyBKsZ5sZW_1VouFlIxGGeZgCUDjPAG_6sI"):
+        self.api_key = api_key
+        self.engine = dbengine
+        self.conn = conn
+>>>>>>> master:scripts/APIs(Yelp, FS, GP)/locmap_APIs.py
 
     def search_places(self, keyword, gtype=None, ll=None, near=None, radius=1000):
         """
@@ -458,8 +468,13 @@ class GooglePlaces():
         if gtype:
             params['type'] = gtype
         if near:
+<<<<<<< HEAD:scripts/APIs(Yelp, FS, GP)/locmap_APIs_v2.py
             #lat, lon = get_latlon(near)
             params['location'] = "19.4326296,-99.1331785"
+=======
+            lat, lon = get_latlon(near)
+            params['location'] = f'{lat},{lon}'
+>>>>>>> master:scripts/APIs(Yelp, FS, GP)/locmap_APIs.py
             print(params['location'])
         elif ll:
             params['location'] = ll
@@ -476,9 +491,26 @@ class GooglePlaces():
             except KeyError:
                 break
         print('Places found: ', len(places))
+<<<<<<< HEAD:scripts/APIs(Yelp, FS, GP)/locmap_APIs_v2.py
         upload_df = pd.DataFrame(columns=gp_column_places[:, KEY_NAME])
         for place in places:
             if True:  # place['id'] not in registered_ids:
                 data = row_builder(place, gp_column_places)
                 upload_df = upload_df.append(pd.DataFrame(data), ignore_index=True)
         return upload_df
+=======
+        if len(places) == 0:
+            return
+        SQL_query = "SELECT place_id FROM tb_gp_places"
+        registered_ids = list(pd.read_sql_query(SQL_query, self.conn).id)
+        upload_df = pd.DataFrame(columns=gp_columns_places[:, KEY_NAME])
+        for place in places:
+            if place['id'] not in registered_ids:
+                data = row_builder(place, gp_columns_places)
+                upload_df = upload_df.append(pd.DataFrame(data), ignore_index=True)
+        upload_df.to_sql('tb_gp_places',
+                         con=self.engine,
+                         index=False,
+                         if_exists='append',
+                         method='multi')
+>>>>>>> master:scripts/APIs(Yelp, FS, GP)/locmap_APIs.py
