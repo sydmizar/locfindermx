@@ -15,7 +15,7 @@ def init_apis(database='local'):
     # __SQL CONNECTION SETUP__
     if database == 'local':
         user = "postgres"
-        password = "sselhtaed"
+        password = "postgres"
         database = "postgres"
         host = "127.0.0.1"
 
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     init_apis('local')
     editor = apis.TableEditor(conn)
     # editor.erase_tables('all')
-    # editor.create_tables('all')
+    editor.create_tables('all')
 
     kwords = [
         'cerveza',

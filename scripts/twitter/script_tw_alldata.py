@@ -6,8 +6,9 @@ Created on Wed Feb 26 19:46:55 2020
 """
 import tweepy
 import pandas as pd
-from tweepy.parsers import JSONParser
-import json
+from bs4 import BeautifulSoup
+#from tweepy.parsers import JSONParser
+#import json
 #import json
 
 
@@ -28,10 +29,10 @@ api = tweepy.API(auth, wait_on_rate_limit=True)
 #place_id = '72ee18b0510eb501' ### Ciudad de México
 place_id = '25530ba03b7d90c6' ### México Country
 result_type = "mixed"
-date_since = "2020-03-15"
-date_until = "2020-03-23"
+date_since = "2020-03-25"
+date_until = "2020-03-30"
 #keywords = "drinkup,martini,shots,cheers,happyhour,foodporn,cocktailporn,ladiesnight,gin,drinks,foodie,sushitime,cocktails,yumm,instafood,nightout,foodies,deli,delicious,instadrink,foodblogger,bartender,dinner,speakeasy,gingin,hankypanky,foodgram,cocktailculture,foodandtravel,foodiecdmx,foodiechilango,foodiegram,foodphotography,foodpic,foodpost,gintonic,hankypankycocktail,hankypankydf,ladocena,mixologia,mixologist,mixology,restaurante,restaurants,soba,wearehankypanky,winelovers,chef"
-keywords = "covid"
+keywords = "amlo"
 final_tweets = [];
 for query in keywords.split(","):
     searched_tweets = [status._json for status in tweepy.Cursor(api.search, q=query + '+place:%s' % place_id, result_type = result_type, since= date_since, until= date_until, lang = "es").items(1000)]
@@ -43,7 +44,7 @@ data = pd.DataFrame(columns = ['created_at', 'id', 'id_str', 'text', 'truncated'
                                'in_reply_to_screen_name', 'protected', 'followers_count', 
                                'friends_count', 'favourites_count', 'utc_offset', 'time_zone', 
                                'geo_enabled', 'verified', 'statuses_count', 'lang', 
-                               'contributors_enabled', 'is_translator', 'is_translation_enabled', 
+                               'contributors_enabled', 'is_translator', 
                                'profile_background_color', 'profile_background_image_url', 
                                'profile_background_image_url_https', 'profile_background_tile', 
                                'profile_image_url', 'profile_image_url_https', 
@@ -54,11 +55,11 @@ data = pd.DataFrame(columns = ['created_at', 'id', 'id_str', 'text', 'truncated'
                                'following', 'follow_request_sent', 'notifications', 'geo', 
                                'coordinates', 'listed_count', 
                                'verified', 'contributors', 'is_quote_status', 'retweet_count', 
-                               'favorite_count', 'favorited', 'retweeted', 'possibly_sensitive',
-                               'attributes', 'bounding_box', 'contained_within', 'country', 
+                               'favorite_count', 'favorited', 'retweeted', 'possibly_sensitive', 'country', 
                                'country_code', 'full_name', 'tweet_place_id', 'place_name', 
                                'place_type', 'place_url', 'user_created_at', 'description', 
-                               'user_id', 'user_id_str', 'location', 'name', 'screen_name', 'hashtags'])
+                               'user_id', 'user_id_str', 'location', 'name', 'screen_name', 
+                               'hashtags', 'user_mentions_name', 'user_mentions_screen_name'])
 
 for searched_tweets in final_tweets[0]:
     created_at= '' 
@@ -84,7 +85,7 @@ for searched_tweets in final_tweets[0]:
     lang= '' 
     contributors_enabled= '' 
     is_translator= '' 
-    is_translation_enabled= '' 
+#    is_translation_enabled= '' 
     profile_background_color= '' 
     profile_background_image_url= '' 
     profile_background_image_url_https= '' 
@@ -117,9 +118,9 @@ for searched_tweets in final_tweets[0]:
     possibly_sensitive= ''
     
     # PLACE ATTRIBUTES
-    attributes = ''
-    bounding_box = ''
-    contained_within = ''
+#    attributes = ''
+#    bounding_box = ''
+#    contained_within = ''
     country = ''
     country_code = ''
     full_name = ''
@@ -140,6 +141,10 @@ for searched_tweets in final_tweets[0]:
     # ENTITIES ATTRIBUTES
     hashtags = ''
     
+    # USER MENTIONS
+    user_mentions_name = ''
+    user_mentions_screen_name = ''
+    
     if ('created_at' in searched_tweets):
         created_at = searched_tweets['created_at'] 
     if ('id' in searched_tweets): 
@@ -151,7 +156,8 @@ for searched_tweets in final_tweets[0]:
     if ('truncated' in searched_tweets): 
         truncated = searched_tweets['truncated'] 
     if ('source' in searched_tweets): 
-        source = searched_tweets['source'] 
+        ahref = searched_tweets['source'] 
+        source = BeautifulSoup(ahref, 'lxml').text
     if ('in_reply_to_status_id' in searched_tweets): 
         in_reply_to_status_id = searched_tweets['in_reply_to_status_id'] 
     if ('in_reply_to_status_id_str' in searched_tweets): 
@@ -187,8 +193,8 @@ for searched_tweets in final_tweets[0]:
         contributors_enabled = searched_tweets['user']['contributors_enabled'] 
     if ('is_translator' in searched_tweets['user']): 
         is_translator = searched_tweets['user']['is_translator'] 
-    if ('is_translation_enabled' in searched_tweets): 
-        is_translation_enabled = searched_tweets['is_translation_enabled'] 
+#    if ('is_translation_enabled' in searched_tweets): 
+#        is_translation_enabled = searched_tweets['is_translation_enabled'] 
     if ('profile_background_color' in searched_tweets['user']): 
         profile_background_color = searched_tweets['user']['profile_background_color']
     if ('profile_background_image_url' in searched_tweets['user']): 
@@ -252,12 +258,12 @@ for searched_tweets in final_tweets[0]:
     if ('possibly_sensitive' in searched_tweets):
         possibly_sensitive = searched_tweets['possibly_sensitive']
         
-    if('attributes' in searched_tweets['place']):
-        attributes = searched_tweets['place']['attributes']
-    if('bounding_box' in searched_tweets['place']):
-        bounding_box = searched_tweets['place']['bounding_box']
-    if('contained_within' in searched_tweets['place']):
-        contained_within = searched_tweets['place']['contained_within']
+#    if('attributes' in searched_tweets['place']):
+#        attributes = searched_tweets['place']['attributes']
+#    if('bounding_box' in searched_tweets['place']):
+#        bounding_box = searched_tweets['place']['bounding_box']
+#    if('contained_within' in searched_tweets['place']):
+#        contained_within = searched_tweets['place']['contained_within']
     if('country' in searched_tweets['place']):
         country = searched_tweets['place']['country']
     if('country_code' in searched_tweets['place']):
@@ -294,13 +300,31 @@ for searched_tweets in final_tweets[0]:
                     hashtags = hashtag['text']
                 else:
                     hashtags = hashtags + ',' + hashtag['text']
+    #user_mentions_name = ''
+    #user_mentions_screen_name = ''           
+    if('user_mentions' in searched_tweets['entities']):
+        for user_mention in searched_tweets['entities']['user_mentions']:
+            if 'name' in user_mention:
+                if user_mentions_name == '':
+                    user_mentions_name = user_mention['name']
+                else:
+                    user_mentions_name = user_mentions_name + ',' + user_mention['name']
+                    
+    if('user_mentions' in searched_tweets['entities']):
+        for user_mention in searched_tweets['entities']['user_mentions']:
+            if 'screen_name' in user_mention:
+                if user_mentions_screen_name == '':
+                    user_mentions_screen_name = user_mention['screen_name']
+                else:
+                    user_mentions_screen_name = user_mentions_screen_name + ',' + user_mention['screen_name']
+        
 
     data = data.append({'created_at': created_at, 'id': id, 'id_str': id_str, 'text': text, 'truncated': truncated, 
                      'source': source, 'in_reply_to_status_id': in_reply_to_status_id, 'in_reply_to_status_id_str': in_reply_to_status_id_str, 
                      'in_reply_to_user_id': in_reply_to_user_id, 'in_reply_to_user_id_str': in_reply_to_user_id_str, 'in_reply_to_screen_name': in_reply_to_screen_name, 
                      'protected': protected, 'followers_count': followers_count, 'friends_count': friends_count, 'listed_count': listed_count, 
                      'favourites_count': favourites_count, 'utc_offset': utc_offset, 'time_zone': time_zone, 'geo_enabled': geo_enabled, 'verified': verified, 'statuses_count': statuses_count, 'lang': lang, 'contributors_enabled': contributors_enabled, 
-                     'is_translator': is_translator, 'is_translation_enabled': is_translation_enabled, 'profile_background_color': profile_background_color, 
+                     'is_translator': is_translator, 'profile_background_color': profile_background_color, 
                      'profile_background_image_url': profile_background_image_url, 'profile_background_image_url_https': profile_background_image_url_https, 
                      'profile_background_tile': profile_background_tile, 'profile_image_url': profile_image_url, 'profile_image_url_https': profile_image_url_https, 
                      'profile_banner_url': profile_banner_url, 'profile_link_color': profile_link_color, 'profile_sidebar_border_color': profile_sidebar_border_color, 
@@ -309,14 +333,13 @@ for searched_tweets in final_tweets[0]:
                      'follow_request_sent': follow_request_sent, 'notifications': notifications, 'geo': geo, 'coordinates': coordinates, 
                      'contributors': contributors, 'is_quote_status': is_quote_status, 
                      'retweet_count': retweet_count, 'favorite_count': favorite_count, 'favorited': favorited, 'retweeted': retweeted, 
-                     'possibly_sensitive': possibly_sensitive, 'attributes': attributes, 
-                     'bounding_box': bounding_box, 'contained_within': contained_within, 'country': country, 
+                     'possibly_sensitive': possibly_sensitive, 'country': country, 
                      'country_code': country_code, 'full_name': full_name, 'tweet_place_id': tweet_place_id, 'place_name': place_name, 
                      'place_type': place_type, 'place_url': place_url, 'user_created_at': user_created_at, 'description': description, 
                      'user_id': user_id, 'user_id_str': user_id_str, 'location': location, 'name': name, 'screen_name': screen_name, 
-                     'hashtags': hashtags}, ignore_index = True)
+                     'hashtags': hashtags, 'user_mentions_name': user_mentions_name, 'user_mentions_screen_name': user_mentions_screen_name}, ignore_index = True)
     
-data.to_csv('data_tw_alldata.csv', index = False, encoding = 'utf-8-sig')
+# data.to_csv('data_tw_alldata.csv', index = False, encoding = 'utf-8-sig')
  
 """    	data = data.append({'created_at': searched_tweets['created_at'], 'id_str': searched_tweets['id_str'], 'text': searched_tweets['text'], 'truncated': searched_tweets['truncated'], 
                          'source': searched_tweets['source'], 'in_reply_to_status_id': searched_tweets['in_reply_to_status_id'], 'in_reply_to_status_id_str': searched_tweets['in_reply_to_status_id_str'], 
