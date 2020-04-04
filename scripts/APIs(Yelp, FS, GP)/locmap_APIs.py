@@ -59,7 +59,7 @@ class TableEditor():
         if apis == 'all' or 'googleplaces' in apis:
             self.create_table('tb_gp_places')
 
-    def alltables2csv():
+    def alltables2csv(self):
         tb_names = list(self.tables_content.keys())
         for tb in tb_names:
             DF = pd.read_sql(sql=f"SELECT * FROM {tb}", con=self.conn)
@@ -477,6 +477,8 @@ class GooglePlaces():
             except KeyError:
                 break
         print('Places found: ', len(places))
+        if len(places) == 0:
+            return
         SQL_query = "SELECT place_id FROM tb_gp_places"
         registered_ids = list(pd.read_sql_query(SQL_query, self.conn).id)
         upload_df = pd.DataFrame(columns=gp_columns_places[:, KEY_NAME])
