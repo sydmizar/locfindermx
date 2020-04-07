@@ -103,7 +103,32 @@ yelp_columns1 = np.array([
 ])
 
 # Tablas para Denue
-
+denu_columns_Extract = np.array([
+    ('Id',              '',         'VARCHAR(25) PRIMARY KEY'), # String
+    ('Nombre',          '',         'text'),                    # String
+    ('Razon_social',    '',         'VARCHAR(25)'),             # String
+    ('Clase_actividad', '',         'text'),                    # String
+    ('Estrato ',        '',         'text'),                    # String
+    ('Tipo_vialidad',   '',         'text'),                    # String
+    ('Calle',           '',         'text'),                    # String
+    ('Num_Exterior',    None,       'numeric'),                 # Value
+    ('Num_Interior',    None,       'numeric'),                 # Value
+    ('Colonia',         '',         'text'),                    # String
+    ('CP ',             None,       'numeric'),                 # Value
+    ('Ubicacion',       None,       'numeric'),                 # Value
+    ('Telefono',        None,       'numeric'),                 # Value
+    ('Correo_e',        None,       'numeric'),                 # Value
+    ('Sitio_internet',    '',       'text'),                    # String
+    ('Tipo',            None,       'numeric'),                 # Value
+    ('Longitud',          '',        'text'),                   # String
+    ('Latitud',           '',        'text'),                   # String
+    ('CentroComercial', '',         'text'),                    # String
+    ('TipoCentroComercial', '',     'text'),                    # String
+    ('NumLocal',        None,       'numeric'),                 # Value
+    ('tipo_corredor_industrial','', 'text'),                    # String
+    ('nom_corredor_industrial','',  'text'),                    # String
+    ('numero_local',    None,       'numeric'),                 # Value
+])
 # Tablas de Tumblr
 # tb_tmbr_users
 tmbl_columns_User = np.array([
