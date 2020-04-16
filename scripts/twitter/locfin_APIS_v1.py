@@ -6,13 +6,13 @@ Created on Wed Apr  1 00:27:24 2020
 """
 
 from global_vars import *
-from pprint import pprint
+#from pprint import pprint
 import sqlalchemy
 import pandas as pd
-import numpy as np
-import requests
+#import numpy as np
+#import requests
 import json
-import sys
+#import sys
 from geopy.geocoders import Nominatim
 import tweepy
 from bs4 import BeautifulSoup
