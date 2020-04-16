@@ -6,13 +6,13 @@ Created on Wed Apr  1 00:27:24 2020
 """
 
 from global_vars import *
-from pprint import pprint
+#from pprint import pprint
 import sqlalchemy
 import pandas as pd
-import numpy as np
-import requests
+#import numpy as np
+#import requests
 import json
-import sys
+#import sys
 from geopy.geocoders import Nominatim
 import tweepy
 from bs4 import BeautifulSoup
@@ -172,7 +172,7 @@ class Twitter():
                                        'has_extended_profile', 'default_profile', 'default_profile_image', 
                                        'following', 'follow_request_sent', 'notifications', 'listed_count', 
                                        'verified', 'contributors', 'is_quote_status', 'retweet_count', 
-                                       'favorite_count', 'favorited', 'retweeted', 'possibly_sensitive', 'country', 
+                                       'favorite_count', 'favorited', 'retweeted', 'possibly_sensitive', 'geo', 'coordinates', 'country', 
                                        'country_code', 'full_name', 'tweet_place_id', 'place_name', 
                                        'place_type', 'place_url', 'user_created_at', 'description', 
                                        'user_id', 'user_id_str', 'location', 'name', 'screen_name', 
@@ -221,8 +221,8 @@ class Twitter():
             following= '' 
             follow_request_sent= '' 
             notifications= '' 
-#            geo= '' 
-#            coordinates= '' 
+            geo= '' 
+            coordinates= '' 
             listed_count= '' 
             verified= '' 
             #place= '' 
@@ -349,10 +349,10 @@ class Twitter():
                 follow_request_sent = searched_tweets['user']['follow_request_sent'] 
             if ('notifications' in searched_tweets['user']): 
                 notifications = searched_tweets['user']['notifications'] 
-#            if ('geo' in searched_tweets): 
-#                geo = searched_tweets['geo'] 
-#            if ('coordinates' in searched_tweets): 
-#                coordinates = searched_tweets['coordinates'] 
+            if ('geo' in searched_tweets): 
+                geo = searched_tweets['geo'] 
+            if ('coordinates' in searched_tweets): 
+                coordinates = searched_tweets['coordinates'] 
             if ('listed_count' in searched_tweets['user']): 
                 listed_count = searched_tweets['user']['listed_count'] 
             if ('verified' in searched_tweets['user']): 
@@ -451,7 +451,7 @@ class Twitter():
                              'follow_request_sent': follow_request_sent, 'notifications': notifications, 
                              'contributors': contributors, 'is_quote_status': is_quote_status, 
                              'retweet_count': retweet_count, 'favorite_count': favorite_count, 'favorited': favorited, 'retweeted': retweeted, 
-                             'possibly_sensitive': possibly_sensitive, 'country': country, 
+                             'possibly_sensitive': possibly_sensitive, 'geo': geo, 'coordinates': coordinates, 'country': country, 
                              'country_code': country_code, 'full_name': full_name, 'tweet_place_id': tweet_place_id, 'place_name': place_name, 
                              'place_type': place_type, 'place_url': place_url, 'user_created_at': user_created_at, 'description': description, 
                              'user_id': user_id, 'user_id_str': user_id_str, 'location': location, 'name': name, 'screen_name': screen_name, 
