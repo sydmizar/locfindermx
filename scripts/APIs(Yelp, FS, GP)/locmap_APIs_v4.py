@@ -17,7 +17,7 @@ import json
 import sys
 
 ################################################################################
-#  >  TABLE EDITOR
+#  >  TABLE EDITOR AND CUSTOM ERROR
 ################################################################################
 
 
@@ -31,10 +31,11 @@ class TableEditor():
             'tb_frsq_lists': frsq_columns_lists,
             'tb_yelp_businesses': yelp_columns,
             'tb_yelp_reviews': yelp_columns1,
-            'tb_tmbl_users': tmbl_columns_User, 
+            'tb_tmbl_users': tmbl_columns_User,
             'tb_tmbl_info': tmbl_columns_blog_Info,
             'tb_tmbl_tags': tmbl_columns_blog_tags,
-            'tb_gp_places': gp_columns_places
+            'tb_gp_places': gp_columns_places,
+            'tb_denu_venues': denu_columns_Extract
         }
 
     def create_table(self, table_name):
@@ -61,12 +62,14 @@ class TableEditor():
         if apis == 'all' or 'yelp' in apis:
             self.create_table('tb_yelp_businesses')
             self.create_table('tb_yelp_reviews')
+        if apis == 'all' or 'denue' in apis:
+            self.create_table('tb_denu_venues')
+        if apis == 'all' or 'googleplaces' in apis:
+            self.create_table('tb_gp_places')
         if apis == 'all' or 'tumblr' in apis:
             self.create_table('tb_tmbl_users')
             self.create_table('tb_tmbl_info')
             self.create_table('tb_tmbl_tags')
-        if apis == 'all' or 'googleplaces' in apis:
-            self.create_table('tb_gp_places')
 
     def alltables2csv(self):
         tb_names = list(self.tables_content.keys())
@@ -87,8 +90,14 @@ class TableEditor():
             self.conn.execute('DROP TABLE IF EXISTS tb_tmbl_users')
             self.conn.execute('DROP TABLE IF EXISTS tb_tmbl_info')
             self.conn.execute('DROP TABLE IF EXISTS tb_tmbl_tags')
+        if apis == 'all' or 'denue' in apis:
+            self.conn.execute('DROP TABLE IF EXISTS tb_denu_venues')
         if apis == 'all' or 'googleplaces' in apis:
             self.conn.execute('DROP TABLE IF EXISTS tb_gp_places')
+
+
+class API_Error(Exception):
+    pass
 
 
 ################################################################################
@@ -127,6 +136,244 @@ def row_builder(data, columns_data):
 
 
 class Foursquare():
+    def __init__(self,
+                 engine,
+                 conn,
+                 client_id='4ZK4GZQS4N31KZX20GOSQZHV0TH5OHOT5014NQTVLDWDVP3J',
+                 client_secret='2LDTDYXDL32UIQITBO20XY4VUA3HQHYX2ACBGA4WJ3AP5NZ0',
+                 version='20200228'):
+        self.engine = engine
+        self.conn = conn
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.version = version
+        self.LimitReached = False
+
+    def meta_handler(self, meta):
+        if meta['code'] in [429, 403]:
+            self.LimitReached = True
+        error = f"\t\t<[ERROR {meta['code']}]> - {meta['errorType']}\n\t\tDetails: {meta['errorDetail']}"
+        raise API_Error(error)
+
+    def explore_venuesEP(self, near=None, ll=None, query=None, radius=250):
+        endpoint_url = 'https://api.foursquare.com/v2/venues/explore'
+        params = {
+            'client_id': self.client_id,
+            'client_secret': self.client_secret,
+            'radius': radius,
+            'query': query,
+            'limit': 50,
+            'offset': 0,
+            'v': self.version
+        }
+        if ll:
+            params['ll'] = ll
+        elif near:
+            params['near'] = near
+        else:
+            print('No has introducido coordenadas ni ubicación!')
+            return
+
+        venues_id = list()
+        while True:
+            res = requests.get(endpoint_url, params=params).json()
+            if res['meta']['code'] != 200:
+                self.LimitReached = True
+                print(res['meta'])
+                break
+            for item in res['response']['groups'][0]['items']:
+                if item['venue']['id'] not in venues_id:
+                    venues_id.append(item['venue']['id'])
+            if len(res['response']['groups'][0]['items']) < 50:
+                break
+            params['offset'] += 50
+        print(f'\t> FS Venues found: {len(venues_id)}')
+        self.dt_fr_db = 0
+        for venue_id in venues_id:
+            try:
+                self.venues_DFbuilder(venue_id)
+            except API_Error as text:
+                print('\n', text)
+        print(f'\t\t\t>> {self.dt_fr_db} Venues already in Database')
+
+    def venues_DFbuilder(self, venue_id):
+
+        def details_venueEP(venue_id):
+            endpoint_url = f'https://api.foursquare.com/v2/venues/{venue_id}'
+            params = {
+                'client_id': self.client_id,
+                'client_secret': self.client_secret,
+                'v': self.version
+            }
+            res = requests.get(endpoint_url, params=params).json()
+            if res['meta']['code'] != 200:
+                self.meta_handler(res['meta'])
+            return res['response']
+
+        def unravel_fs_dicts(venue):
+            data = dict()
+            for tag in ['location', 'stats']:
+                for key in venue[tag].keys():
+                    data[key] = [venue[tag][key]]
+            if 'likes' in venue.keys():
+                data['likeCount'] = [venue['likes']['count']]
+            del data['formattedAddress']
+            if 'labeledLatLngs' in data.keys():
+                del data['labeledLatLngs']
+            return data
+
+        # DataFrame Initialization
+        display_df = pd.DataFrame(columns=frsq_columns_venues[:, KEY_NAME])
+        registered_ids = list(pd.read_sql_query("SELECT id FROM tb_frsq_venues", self.conn).id)
+        if venue_id not in registered_ids:
+            # If Venue not in Database, request data from Foursquare
+            if self.LimitReached:
+                return
+            print(f'\t\t\tVenue {venue_id} data from ', end='')
+            venue = details_venueEP(venue_id)
+            data = row_builder(venue['venue'], frsq_columns_venues[:FS_LIMIT, :])
+            data.update(unravel_fs_dicts(venue['venue']))
+            print('Foursquare - Uploading Data...', end='')
+
+            self.lists_DFbuilder(venue_id)
+            self.tips_DFbuilder(venue_id)
+            self.photos_DFbuilder(venue_id)
+            display_df.append(pd.DataFrame(data), ignore_index=True).to_sql(
+                'tb_frsq_venues',
+                con=self.engine,
+                index=False,
+                if_exists='append'
+            )
+            print('SUCCESS')
+        else:
+            # If Venue already in Database, continue.
+            self.dt_fr_db += 1
+
+    def lists_DFbuilder(self, venue_id):
+
+        def list_endpoint(venue_id, offset=0):
+            endpoint_url = f"https://api.foursquare.com/v2/venues/{venue_id}/listed"
+            params = {
+                'client_id': self.client_id,
+                'client_secret': self.client_secret,
+                'v': self.version,
+                'group': 'other',
+                'limit': 30,
+                'offset': offset
+            }
+            res = requests.get(endpoint_url, params=params).json()
+            if res['meta']['code'] != 200:
+                self.meta_handler(res['meta'])
+            return res['response']
+
+        lists = list()
+        offset = 0
+        while True:
+            res = list_endpoint(venue_id, offset)
+            lists.extend(res['lists']['items'])
+            if res['lists']['count'] == 30:
+                offset += 30
+                continue
+            break
+        print(f"{len(lists)} lists, ", end='')
+        SQL_query = "SELECT id FROM tb_frsq_lists"
+        registered_ids = list(pd.read_sql_query(SQL_query, self.conn).id)
+        upload_df = pd.DataFrame(columns=frsq_columns_lists[:, KEY_NAME])
+        for listed in lists:
+            listed['venue'] = venue_id
+            data = row_builder(listed, frsq_columns_lists)
+            if (data['id'][0] not in registered_ids) and (data['id'][0] not in list(upload_df.id)):
+                upload_df = upload_df.append(pd.DataFrame(data), ignore_index=True, sort=False)
+        upload_df.to_sql('tb_frsq_lists',
+                         con=self.engine,
+                         index=False,
+                         if_exists='append',
+                         method='multi')
+
+    def tips_DFbuilder(self, venue_id):
+
+        def tips_endpoint(venue_id, offset=0):
+            endpoint_url = f"https://api.foursquare.com/v2/venues/{venue_id}/tips"
+            params = {
+                'client_id': self.client_id,
+                'client_secret': self.client_secret,
+                'v': self.version,
+                'sort': 'recent',
+                'limit': 500,
+                'offset': offset
+            }
+            res = requests.get(endpoint_url, params=params).json()
+            if res['meta']['code'] != 200:
+                self.meta_handler(res['meta'])
+            return res['response']
+
+        offset, tips = 0, list()
+        while True:
+            res = tips_endpoint(venue_id, offset)
+            tips.extend(res['tips']['items'])
+            if res['tips']['count'] == 500:
+                offset += 500
+                continue
+            break
+        print(f"{len(tips)} tips, ", end='')
+        SQL_query = "SELECT id FROM tb_frsq_tips"
+        registered_ids = list(pd.read_sql_query(SQL_query, self.conn).id)
+        upload_df = pd.DataFrame(columns=frsq_columns_tips[:, KEY_NAME])
+        for listed in tips:
+            listed['venue'] = venue_id
+            data = row_builder(listed, frsq_columns_tips)
+            if data['id'][0] not in registered_ids and data['id'][0] not in list(upload_df.id):
+                upload_df = upload_df.append(pd.DataFrame(data), ignore_index=True, sort=False)
+        upload_df.to_sql(
+            'tb_frsq_tips',
+            con=self.engine,
+            index=False,
+            if_exists='append',
+            method='multi')
+
+    def photos_DFbuilder(self, venue_id):
+
+        def photos_endpoint(venue_id, offset=0):
+            endpoint_url = f"https://api.foursquare.com/v2/venues/{venue_id}/photos"
+            params = {
+                'client_id': self.client_id,
+                'client_secret': self.client_secret,
+                'v': self.version,
+                'limit': 200,
+                'offset': offset
+            }
+            res = requests.get(endpoint_url, params=params).json()
+            if res['meta']['code'] != 200:
+                self.meta_handler(res['meta'])
+            return res['response']
+
+        offset, photos = 0, list()
+        while True:
+            res = photos_endpoint(venue_id, offset)
+            photos.extend(res['photos']['items'])
+            if res['photos']['count'] == 200:
+                offset += 200
+                continue
+            break
+        print(f"{len(photos)} photos - ", end='')
+        SQL_query = "SELECT id FROM tb_frsq_photos"
+        registered_ids = list(pd.read_sql_query(SQL_query, self.conn).id)
+        upload_df = pd.DataFrame(columns=frsq_columns_photos[:, KEY_NAME])
+        for listed in photos:
+            listed['venue'] = venue_id
+            data = row_builder(listed, frsq_columns_photos)
+            if data['id'][0] not in registered_ids and data['id'][0] not in list(upload_df.id):
+                upload_df = upload_df.append(pd.DataFrame(data), ignore_index=True, sort=False)
+        upload_df.to_sql(
+            'tb_frsq_photos',
+            con=self.engine,
+            index=False,
+            if_exists='append',
+            method='multi')
+
+
+# Foursquare Backup
+class Foursquare_BACKUP():
     def __init__(self,
                  engine,
                  conn,
@@ -190,22 +437,25 @@ class Foursquare():
         venues_id = list()
         while True:
             res = requests.get(endpoint_url, params=params).json()
-            if res['meta']['code'] != '200':
+            if res['meta']['code'] != 200:
                 self.LimitReached = True
-                print(res)
-                return
-            sys.exit()
+                print(res['meta']['errorDetail'])
+                break
             for item in res['response']['groups'][0]['items']:
                 if item['venue']['id'] not in venues_id:
                     venues_id.append(item['venue']['id'])
             if len(res['response']['groups'][0]['items']) < 50:
                 break
             params['offset'] += 50
-        print(f'\t > FS Venues found: {len(venues_id)}')
-        self.venues_DFbuilder(venues_id)
-        self.lists_DFbuilder(venues_id)
-        self.tips_DFbuilder(venues_id)
-        self.photos_DFbuilder(venues_id)
+        print(f'\t> FS Venues found: {len(venues_id)}')
+        if self.LimitReached:
+            return
+        request_list = self.venues_DFbuilder(venues_id)
+        if not request_list:
+            return
+        self.lists_DFbuilder(request_list)
+        self.tips_DFbuilder(request_list)
+        self.photos_DFbuilder(request_list)
 
     def venues_DFbuilder(self, venue_list):
         """
@@ -229,24 +479,39 @@ class Foursquare():
                 'v': self.version
             }
             res = requests.get(endpoint_url, params=params).json()
-            if res['meta']['code'] != '200':
+            if res['meta']['code'] != 200:
                 self.LimitReached = True
-                print(res)
+                print(res['meta']['errorDetail'])
                 return
             return res['response']
+
+        def unravel_fs_dicts(venue):
+            data = dict()
+            for tag in ['location', 'stats']:
+                for key in venue[tag].keys():
+                    data[key] = [venue[tag][key]]
+            if 'likes' in venue.keys():
+                data['likeCount'] = [venue['likes']['count']]
+            del data['formattedAddress']
+            if 'labeledLatLngs' in data.keys():
+                del data['labeledLatLngs']
+            return data
 
         display_df = pd.DataFrame(columns=frsq_columns_venues[:, KEY_NAME])
         SQL_query = "SELECT id FROM tb_frsq_venues"
         registered_ids = list(pd.read_sql_query(SQL_query, self.conn).id)
         request_list = list()
+        continue_list = list()
         for venue_id in venue_list:
             print(f'\t\t\tVenue with ID {venue_id} obtained from: ', end='')
-            venue = details_venueEP(venue_id)
-            if self.LimitReached:
-                return
             if venue_id not in registered_ids:
-                data = row_builder(venue['venue'], frsq_columns_venues)
+                venue = details_venueEP(venue_id)
+                if self.LimitReached:
+                    return
+                data = row_builder(venue['venue'], frsq_columns_venues[:FS_LIMIT, :])
+                data.update(unravel_fs_dicts(venue['venue']))
                 display_df = display_df.append(pd.DataFrame(data), ignore_index=True)
+                continue_list.append(venue_id)
                 print('Foursquare')
             else:
                 request_list.append(venue_id)
@@ -264,7 +529,7 @@ class Foursquare():
                                                             primary_keys=request_list,
                                                             table_name='tb_frsq_venues'),
                                        ignore_index=True)
-        return display_df
+        return continue_list
 
     def lists_DFbuilder(self, venue_list):
         print('\t\t > FS loading lists table')
@@ -280,9 +545,9 @@ class Foursquare():
                 'offset': offset
             }
             res = requests.get(endpoint_url, params=params).json()
-            if res['meta']['code'] != '200':
+            if res['meta']['code'] != 200:
                 self.LimitReached = True
-                print(res)
+                print(res['meta']['errorDetail'])
                 return
             return res['response']
 
@@ -301,17 +566,17 @@ class Foursquare():
             SQL_query = "SELECT id FROM tb_frsq_lists"
             registered_ids = list(pd.read_sql_query(SQL_query, self.conn).id)
             upload_df = pd.DataFrame(columns=frsq_columns_lists[:, KEY_NAME])
-            a = 0
             for listed in lists:
                 listed['venue'] = venue_id
                 data = row_builder(listed, frsq_columns_lists)
                 if (data['id'][0] not in registered_ids) and (data['id'][0] not in list(upload_df.id)):
                     upload_df = upload_df.append(pd.DataFrame(data), ignore_index=True, sort=False)
-            upload_df.to_sql('tb_frsq_lists',
-                            con=self.engine,
-                            index=False,
-                            if_exists='append',
-                            method='multi')
+            upload_df.to_sql(
+                'tb_frsq_lists',
+                con=self.engine,
+                index=False,
+                if_exists='append',
+                method='multi')
             print(f'\t UPLOADED SUCCESFULLY')
 
     def tips_DFbuilder(self, venue_list):
@@ -328,9 +593,9 @@ class Foursquare():
                 'offset': offset
             }
             res = requests.get(endpoint_url, params=params).json()
-            if res['meta']['code'] != '200':
+            if res['meta']['code'] != 200:
                 self.LimitReached = True
-                print(res)
+                print(res['meta']['errorDetail'])
                 return
             return res['response']
 
@@ -377,9 +642,9 @@ class Foursquare():
                 'offset': offset
             }
             res = requests.get(endpoint_url, params=params).json()
-            if res['meta']['code'] != '200':
+            if res['meta']['code'] != 200:
                 self.LimitReached = True
-                print(res)
+                print(res['meta']['errorDetail'])
                 return
             return res['response']
 
@@ -410,13 +675,25 @@ class Foursquare():
                              method='multi')
             print('\tUPLOADED SUCCESFULLY')
 
+
 class Yelp():
-    def __init__(self, dbengine, conn, api_key):
+    def __init__(self, dbengine, conn, api_key="xE7CYuOc8w6Nx8gIIaHqn98bO9VJv4oiWDviCpDAg7skiAa_q4fDnfbSM2v5RfKd6xVqvJ0VJ9OiN1KhE4HUMmX3tEYmHc4a7Z2PtNYBQynSQAdwU0bLwVPV7vg5XnYx"):
         self.dbengine = dbengine
         self.conn = conn
         self.api_key = api_key
 
     def business_Tab(self, term='bar', limit=50, location='Guadalajara', offset=0, radius=10000):
+
+        def unravel_yp_dicts(venue):
+            data = dict()
+            for tag in ['location', 'coordinates']:
+                for key in venue[tag].keys():
+                    data[key] = [venue[tag][key]]
+            del data['address2']
+            del data['address3']
+            del data['display_address']
+            return data
+
         endpoint1 = 'https://api.yelp.com/v3/businesses/search'
         HEADERS = {'Authorization': 'bearer %s' % self.api_key}
         PARAMETERS = {'term': term,
@@ -434,8 +711,10 @@ class Yelp():
         registered_ids = list(pd.read_sql_query(SQL_query, self.conn).id)
         Business_DF = pd.DataFrame(columns=yelp_columns[:, KEY_NAME])
         to_upload = pd.DataFrame(columns=yelp_columns[:, KEY_NAME])
+        print(f'\t> Yelp found: {len(business_Tab)}')
         for business in business_Tab:
-            fila = row_builder(business, yelp_columns)
+            fila = row_builder(business, yelp_columns[:YP_LIMIT, :])
+            fila.update(unravel_yp_dicts(business))
             row = pd.DataFrame(fila)
             if row.id[0] not in registered_ids:
                 to_upload = to_upload.append(row, ignore_index='True', sort=False)
@@ -464,7 +743,6 @@ class Yelp():
         SQL_query = 'SELECT id FROM tb_yelp_reviews'
         registered_ids = list(pd.read_sql(SQL_query, self.conn).id)
         reviews_DF = pd.DataFrame(columns=yelp_columns1[:, KEY_NAME])
-        to_upload = pd.DataFrame(columns=yelp_columns1[:, KEY_NAME])
         for reviews, bussid in zip(reviews_tab, id_tab):
             for review in reviews['reviews']:
                 review['bussinessid'] = bussid
@@ -479,36 +757,40 @@ class Yelp():
                           if_exists='append',
                           method='multi')
 
+
 class GooglePlaces():
     def __init__(self, dbengine, conn, api_key="AIzaSyBKsZ5sZW_1VouFlIxGGeZgCUDjPAG_6sI"):
         self.api_key = api_key
         self.engine = dbengine
         self.conn = conn
 
-    def search_places(self, keyword, gtype=None, ll=None, near=None, radius=1000):
+    def search_places(self, keyword, gtype=None, ll=None, radius=1000):
         """
         type :: <string> 'restaurant' - Restringe la búsqueda a quienes cumplan con el tipo.
         ll :: <string> '1.32426,-90.1532' - Latitud y Longitud en forma de string separados por una coma.
         radius :: <integer> 1000 - Radio en metros del punto de búsqueda, MAX = 50,000
         """
 
+        def unravel_yp_dicts(venue):
+            data = dict()
+            try:
+                for key in venue['plus_code'].keys():
+                    data[key] = [venue['plus_code'][key]]
+            except KeyError:
+                pass
+            data['latitude'] = [venue['geometry']['location']['lat']]
+            data['longitude'] = [venue['geometry']['location']['lng']]
+            return data
+
         endpoint_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
         params = {
             'key': self.api_key,
             'keyword': keyword,
-            'radius': radius
+            'radius': radius,
+            'll': ll
         }
         if gtype:
             params['type'] = gtype
-        if near:
-            lat, lon = get_latlon(near)
-            params['location'] = f'{lat},{lon}'
-            print(params['location'])
-        elif ll:
-            params['location'] = ll
-        else:
-            print('Debe definir una ubicación para la búsqueda.')
-            raise NoLocationDefined
 
         places = list()
         while True:
@@ -518,15 +800,16 @@ class GooglePlaces():
                 params['pagetoken'] = res['next_page_token']
             except KeyError:
                 break
-        print('Places found: ', len(places))
+        print('\t> Places found: ', len(places))
         if len(places) == 0:
             return
         SQL_query = "SELECT place_id FROM tb_gp_places"
-        registered_ids = list(pd.read_sql_query(SQL_query, self.conn).id)
+        registered_ids = list(pd.read_sql_query(SQL_query, self.conn).place_id)
         upload_df = pd.DataFrame(columns=gp_columns_places[:, KEY_NAME])
         for place in places:
-            if place['id'] not in registered_ids:
-                data = row_builder(place, gp_columns_places)
+            if place['place_id'] not in registered_ids:
+                data = row_builder(place, gp_columns_places[:GP_LIMIT, :])
+                data.update(unravel_yp_dicts(place))
                 upload_df = upload_df.append(pd.DataFrame(data), ignore_index=True)
         upload_df.to_sql('tb_gp_places',
                          con=self.engine,
@@ -534,12 +817,13 @@ class GooglePlaces():
                          if_exists='append',
                          method='multi')
 
+
 class DENUE():
-    def __init__(self,dbengine):
+    def __init__(self, dbengine, conn):
         self.dbengine = dbengine
-        self.conn = self.dbengine.connect()
+        self.conn = conn
         self.geolocator = Nominatim(user_agent='App de prueba')
-        self.claves_entidad ={'entidad':['Aguascalientes',
+        self.claves_entidad = {'entidad':['Aguascalientes',
         'Baja California','Baja California Sur','Campeche','Coahuila',
         'Colima','Chiapas','Chihuahua','Ciudad de México','Durango','Guanajuato',
         'Guerrero','Hidalgo','Jalisco','México','Michoacán','Morelos',
@@ -582,15 +866,27 @@ class DENUE():
         if (status == 200): 
             jsonObj= requests.get(url).json()
             dfItem = pd.DataFrame.from_records(jsonObj)
-            print('Estatus de la petición: {}'.format(response.status_code))
+            # print('Estatus de la petición: {}'.format(response.status_code))
         else:
             print('Estatus de la petición: {}'.format(response.status_code))
-            print('Algo salió mal. Intentalo de nuevo')
+            print('Algo salió mal con Denue. Intentalo de nuevo')
             dfItem = pd.DataFrame
             jsonObj = {}
             print('No existen resultados para su búsqueda.')
-            
-        return dfItem, jsonObj
+            return
+        
+        #### Noah Edit ####
+        print(f'\t> Denue found: {len(dfItem)}')
+        obj = set(list(dfItem.columns) + list(denu_columns_Extract[:, KEY_NAME]))
+        to_upload = pd.DataFrame(columns=denu_columns_Extract[:, KEY_NAME])
+        to_upload = to_upload.append(dfItem, ignore_index=True)
+        to_upload.to_sql("tb_denu_venues",
+                         con=self.dbengine,
+                         index=False,
+                         if_exists='append',
+                         method='multi')
+        #### ######### ####    
+        #return dfItem, jsonObj
 
     # FICHA
     def Ficha(self,id):

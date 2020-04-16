@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
-
-import locmap_APIs_v3 as apis
+import sys
+import locmap_APIs_v4 as apis
 
 
 def init_apis(database='local'):
@@ -15,7 +15,7 @@ def init_apis(database='local'):
     # __SQL CONNECTION SETUP__
     if database == 'local':
         user = "postgres"
-        password = "postgres"
+        password = "sselhtaed"
         database = "postgres"
         host = "127.0.0.1"
 
@@ -47,23 +47,28 @@ def init_apis(database='local'):
 
     # Denue
     token = "10b813e7-3b7a-4d66-8588-2404e83c7734sebasti"
-    # dn_client = 
+    dn_client = apis.DENUE(dbengine, conn)
 
 
 def search_apis(near=None, query=None, radius=1000):
     global fs_client, yp_client, gp_client, dn_client
 
+    lat, lon = apis.get_latlon(near)
+    ll = ','.join([str(lat), str(lon)])
+    print('\t Coordinates given: lat[', lat, '] lon[', lon, ']')
+
     fs_client.explore_venuesEP(near=near, query=query, radius=radius)
     yp_client.business_Tab(term=query, location=near, radius=radius)
-    gp_client.search_places(keyword=query, near=near, radius=radius)
+    gp_client.search_places(keyword=query, ll=ll, radius=radius)
+    dn_client.Buscar(cond=query, lat=lat, lon=lon, radio=radius)
 
 
 if __name__ == "__main__":
     init_apis('local')
     editor = apis.TableEditor(conn)
     # editor.erase_tables('all')
-    editor.create_tables('all')
-
+    # editor.create_tables('all')
+    
     kwords = [
         'cerveza',
         'bar',
@@ -87,9 +92,8 @@ if __name__ == "__main__":
     ]
 
     for kw in kwords:
+        print('\nBuscando: ',kw)
         search_apis(near='Ciudad de Mexico', query=kw, radius=2000)
 
     # Si todo corre bien, la siguiente linea carga los datos a csv por tabla.
-    editor.alltables2csv()
-
-
+    # editor.alltables2csv()
