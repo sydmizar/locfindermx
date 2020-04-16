@@ -1,0 +1,482 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><graph edgedefault="undirected"><node id="covid_19mexico"/>
+<node id="CoronavirusMx"/>
+<node id="Covid_19"/>
+<node id="coronavirus"/>
+<node id="QuedateEnCasa"/>
+<node id="FelizDomingo"/>
+<node id="PuertoMorelos"/>
+<node id="covid_19"/>
+<node id="gelantibacterial"/>
+<node id="salud"/>
+<node id="imss"/>
+<node id="cuernavaca"/>
+<node id="piel"/>
+<node id="Covid"/>
+<node id="SanaDistancia"/>
+<node id="Covid_19mx"/>
+<node id="ElCacas"/>
+<node id="CrimenesDeLesaHumanidad"/>
+<node id="LopezNosEstaMatando"/>
+<node id="pandemia"/>
+<node id="cdmx"/>
+<node id="creer"/>
+<node id="PandemiaMundial"/>
+<node id="saturday"/>
+<node id="StayAtHome"/>
+<node id="StayHome"/>
+<node id="Homeoffice"/>
+<node id="work"/>
+<node id="YoMeQuedoEnCasa"/>
+<node id="indiegame"/>
+<node id="gamedev"/>
+<node id="Jalisco"/>
+<node id="cuarentena"/>
+<node id="Dia6"/>
+<node id="encasa"/>
+<node id="yomequedoencasa"/>
+<node id="MeQuedoEnCasa"/>
+<node id="COVID19mexico"/>
+<node id="Corona"/>
+<node id="CoronaVirus"/>
+<node id="QuédateEnTuChingadaCasa"/>
+<node id="DiarioDeUnaCuarentena"/>
+<node id="virus"/>
+<node id="desigualdad"/>
+<node id="capitalismo"/>
+<node id="ÚLTIMAHORA"/>
+<node id="COAHUILA"/>
+<node id="Saltillo"/>
+<node id="COVID_19"/>
+<node id="Coahuila"/>
+<node id="covid19"/>
+<node id="EdoMex"/>
+<node id="meganoticias"/>
+<node id="transformaciondecuarta"/>
+<node id="Tecnología"/>
+<node id="Monclova"/>
+<node id="FelizSábado"/>
+<node id="SerFieraEsUnOrgullo"/>
+<node id="JugamosEnCasa"/>
+<node id="CuarentenaPorLaVida"/>
+<node id="CoronaCrisis"/>
+<node id="LAVATELASMANOS"/>
+<node id="SalvemosMéxico"/>
+<node id="SusanaDistancia"/>
+<node id="photo"/>
+<node id="SabadoDeGanarSeguidores"/>
+<node id="quedateencasa"/>
+<node id="beer"/>
+<node id="CDMX"/>
+<node id="FelizSabado"/>
+<node id="starbucksmexico"/>
+<node id="Alsea"/>
+<node id="LeyFederalDelTrabajo"/>
+<node id="pendejazo"/>
+<node id="Gobernador"/>
+<node id="Aguascalientes"/>
+<node id="culona"/>
+<node id="CulonaVirus"/>
+<node id="QuédateEnCasa"/>
+<node id="21deMarzo"/>
+<node id="Cozumel"/>
+<node id="Tlaxcala"/>
+<node id="COVIDー19mx"/>
+<node id="Nomames"/>
+<node id="COVID19mx"/>
+<node id="Mexicali"/>
+<node id="COVID"/>
+<node id="LosCabos"/>
+<node id="Notiexprés"/>
+<node id="Edoméx"/>
+<node id="latam"/>
+<node id="ComunicacióndeValor"/>
+<node id="Cuba"/>
+<node id="Mexico"/>
+<node id="4T"/>
+<node id="drHouse"/>
+<node id="BCS"/>
+<node id="solteroconsolidado"/>
+<node id="Entérate"/>
+<node id="México"/>
+<node id="Tehuacàn"/>
+<node id="Primavera2020"/>
+<node id="D"/>
+<node id="DateCuenta"/>
+<node id="HumanosResponsables"/>
+<node id="sindromededown"/>
+<node id="QueretaroResponsable"/>
+<node id="Campeche"/>
+<node id="Transporte"/>
+<node id="covid"/>
+<node id="Edomex"/>
+<node id="EdomexPrevencion"/>
+<node id="7Noviembre2020"/>
+<node id="Casiseñores"/>
+<node id="Lovers"/>
+<node id="pediatria"/>
+<node id="sanluispotosi"/>
+<node id="slp"/>
+<node id="DiaMundialDeLaPoesia"/>
+<node id="OMS"/>
+<node id="Noticias"/>
+<node id="Coronavirus"/>
+<node id="Coronavirusmexico"/>
+<node id="confinamiento"/>
+<node id="italia"/>
+<node id="Detente"/>
+<node id="QueNoSeTePase"/>
+<node id="AMLO"/>
+<node id="Querétaro"/>
+<node id="Durango"/>
+<node id="miedo"/>
+<node id="elcacas"/>
+<node id="ConLosNinosNo"/>
+<node id="EnCasaConLos40"/>
+<node id="NetflixParty"/>
+<node id="Zacatecas"/>
+<node id="FelizSabadoATodos"/>
+<node id="SCTInforma"/>
+<node id="Medicina"/>
+<node id="BoicotAlsea"/>
+<node id="JaliscoResponsable"/>
+<node id="NoticiasDMX"/>
+<node id="cafe"/>
+<node id="GobiernoFederal"/>
+<node id="maroma"/>
+<node id="oracreeactua"/>
+<node id="IASMRegiiomontana"/>
+<node id="IASD"/>
+<node id="NuevoLeon"/>
+<node id="NLextraordinario"/>
+<node id="stop"/>
+<node id="timeout"/>
+<node id="SigloXXI"/>
+<node id="Historia"/>
+<node id="GelAntibacterial"/>
+<node id="cubrebocas"/>
+<node id="Contingencia"/>
+<node id="YoTeAdmiroAMLO"/>
+<node id="Salud"/>
+<node id="Healthcare"/>
+<node id="PanoramaInformativoDeLosSábados"/>
+<node id="MÉXICO"/>
+<node id="AislamientoObligatorio"/>
+<node id="BuenosDiasATodos"/>
+<node id="AmloRidículo"/>
+<node id="PeligroParaMexico"/>
+<node id="Corrupcion"/>
+<node id="Venezuela"/>
+<node id="COVIDVenezuela"/>
+<node id="EdomexInforma"/>
+<node id="day1"/>
+<node id="stayhome"/>
+<node id="KarinaVelasco"/>
+<node id="Nacional"/>
+<node id="ToqueDeQueda"/>
+<node id="quedateEnTuCasa"/>
+<node id="Pachuca"/>
+<node id="Caasim"/>
+<node id="ELCACAS"/>
+<node id="ELCACASNOPUEDE"/>
+<node id="ElPeorGobiernoDeLaHistoria"/>
+<node id="Covid_19FuckUps"/>
+<node id="CuarentenaTotal"/>
+<node id="Dia5deCuarentena"/>
+<node id="Shows"/>
+<node id="EllaNoTeAma"/>
+<node id="Crisis"/>
+<edge source="covid_19mexico" target="CoronavirusMx"/>
+<edge source="CoronavirusMx" target="Coronavirusmexico"/>
+<edge source="CoronavirusMx" target="coronavirus"/>
+<edge source="CoronavirusMx" target="Covid_19"/>
+<edge source="CoronavirusMx" target="COVID19mx"/>
+<edge source="CoronavirusMx" target="Crisis"/>
+<edge source="Covid_19" target="coronavirus"/>
+<edge source="Covid_19" target="QuedateEnCasa"/>
+<edge source="Covid_19" target="creer"/>
+<edge source="Covid_19" target="PandemiaMundial"/>
+<edge source="Covid_19" target="saturday"/>
+<edge source="Covid_19" target="StayAtHome"/>
+<edge source="Covid_19" target="StayHome"/>
+<edge source="Covid_19" target="Homeoffice"/>
+<edge source="Covid_19" target="work"/>
+<edge source="Covid_19" target="YoMeQuedoEnCasa"/>
+<edge source="Covid_19" target="cuarentena"/>
+<edge source="Covid_19" target="Dia6"/>
+<edge source="Covid_19" target="MeQuedoEnCasa"/>
+<edge source="Covid_19" target="COVID19mexico"/>
+<edge source="Covid_19" target="Corona"/>
+<edge source="Covid_19" target="Covid_19mx"/>
+<edge source="Covid_19" target="CoronaVirus"/>
+<edge source="Covid_19" target="virus"/>
+<edge source="Covid_19" target="desigualdad"/>
+<edge source="Covid_19" target="capitalismo"/>
+<edge source="Covid_19" target="FelizSábado"/>
+<edge source="Covid_19" target="SerFieraEsUnOrgullo"/>
+<edge source="Covid_19" target="JugamosEnCasa"/>
+<edge source="Covid_19" target="CuarentenaPorLaVida"/>
+<edge source="Covid_19" target="CoronaCrisis"/>
+<edge source="Covid_19" target="LAVATELASMANOS"/>
+<edge source="Covid_19" target="beer"/>
+<edge source="Covid_19" target="CDMX"/>
+<edge source="Covid_19" target="FelizSabado"/>
+<edge source="Covid_19" target="SabadoDeGanarSeguidores"/>
+<edge source="Covid_19" target="culona"/>
+<edge source="Covid_19" target="CulonaVirus"/>
+<edge source="Covid_19" target="COVID19mx"/>
+<edge source="Covid_19" target="Notiexprés"/>
+<edge source="Covid_19" target="Edoméx"/>
+<edge source="Covid_19" target="Mexico"/>
+<edge source="Covid_19" target="4T"/>
+<edge source="Covid_19" target="drHouse"/>
+<edge source="Covid_19" target="BCS"/>
+<edge source="Covid_19" target="solteroconsolidado"/>
+<edge source="Covid_19" target="Primavera2020"/>
+<edge source="Covid_19" target="D"/>
+<edge source="Covid_19" target="DateCuenta"/>
+<edge source="Covid_19" target="HumanosResponsables"/>
+<edge source="Covid_19" target="QueretaroResponsable"/>
+<edge source="Covid_19" target="Campeche"/>
+<edge source="Covid_19" target="Transporte"/>
+<edge source="Covid_19" target="SanaDistancia"/>
+<edge source="Covid_19" target="Coronavirusmexico"/>
+<edge source="Covid_19" target="confinamiento"/>
+<edge source="Covid_19" target="italia"/>
+<edge source="Covid_19" target="miedo"/>
+<edge source="Covid_19" target="elcacas"/>
+<edge source="Covid_19" target="ConLosNinosNo"/>
+<edge source="Covid_19" target="FelizSabadoATodos"/>
+<edge source="Covid_19" target="SCTInforma"/>
+<edge source="Covid_19" target="Medicina"/>
+<edge source="Covid_19" target="Zacatecas"/>
+<edge source="Covid_19" target="COVIDー19mx"/>
+<edge source="Covid_19" target="GobiernoFederal"/>
+<edge source="Covid_19" target="maroma"/>
+<edge source="Covid_19" target="oracreeactua"/>
+<edge source="Covid_19" target="IASMRegiiomontana"/>
+<edge source="Covid_19" target="IASD"/>
+<edge source="Covid_19" target="NuevoLeon"/>
+<edge source="Covid_19" target="NLextraordinario"/>
+<edge source="Covid_19" target="stop"/>
+<edge source="Covid_19" target="timeout"/>
+<edge source="Covid_19" target="México"/>
+<edge source="Covid_19" target="SigloXXI"/>
+<edge source="Covid_19" target="Historia"/>
+<edge source="Covid_19" target="GelAntibacterial"/>
+<edge source="Covid_19" target="cubrebocas"/>
+<edge source="Covid_19" target="Contingencia"/>
+<edge source="Covid_19" target="Salud"/>
+<edge source="Covid_19" target="Healthcare"/>
+<edge source="Covid_19" target="AislamientoObligatorio"/>
+<edge source="Covid_19" target="BuenosDiasATodos"/>
+<edge source="Covid_19" target="AmloRidículo"/>
+<edge source="Covid_19" target="PeligroParaMexico"/>
+<edge source="Covid_19" target="Corrupcion"/>
+<edge source="Covid_19" target="Venezuela"/>
+<edge source="Covid_19" target="COVIDVenezuela"/>
+<edge source="Covid_19" target="ToqueDeQueda"/>
+<edge source="Covid_19" target="quedateEnTuCasa"/>
+<edge source="Covid_19" target="ElPeorGobiernoDeLaHistoria"/>
+<edge source="Covid_19" target="CuarentenaTotal"/>
+<edge source="Covid_19" target="Dia5deCuarentena"/>
+<edge source="coronavirus" target="Covid"/>
+<edge source="coronavirus" target="QuedateEnCasa"/>
+<edge source="coronavirus" target="Dia6"/>
+<edge source="coronavirus" target="COVID_19"/>
+<edge source="coronavirus" target="Coahuila"/>
+<edge source="coronavirus" target="FelizSábado"/>
+<edge source="coronavirus" target="SerFieraEsUnOrgullo"/>
+<edge source="coronavirus" target="JugamosEnCasa"/>
+<edge source="coronavirus" target="CuarentenaPorLaVida"/>
+<edge source="coronavirus" target="StayAtHome"/>
+<edge source="coronavirus" target="CoronaCrisis"/>
+<edge source="coronavirus" target="cuarentena"/>
+<edge source="coronavirus" target="beer"/>
+<edge source="coronavirus" target="culona"/>
+<edge source="coronavirus" target="CulonaVirus"/>
+<edge source="coronavirus" target="Coronavirusmexico"/>
+<edge source="coronavirus" target="COVID19mx"/>
+<edge source="coronavirus" target="confinamiento"/>
+<edge source="coronavirus" target="COVID19mexico"/>
+<edge source="coronavirus" target="Alsea"/>
+<edge source="coronavirus" target="covid_19"/>
+<edge source="coronavirus" target="quedateencasa"/>
+<edge source="coronavirus" target="stop"/>
+<edge source="coronavirus" target="timeout"/>
+<edge source="QuedateEnCasa" target="StayAtHome"/>
+<edge source="QuedateEnCasa" target="StayHome"/>
+<edge source="QuedateEnCasa" target="Homeoffice"/>
+<edge source="QuedateEnCasa" target="work"/>
+<edge source="QuedateEnCasa" target="YoMeQuedoEnCasa"/>
+<edge source="QuedateEnCasa" target="CoronaVirus"/>
+<edge source="QuedateEnCasa" target="CuarentenaPorLaVida"/>
+<edge source="QuedateEnCasa" target="CoronaCrisis"/>
+<edge source="QuedateEnCasa" target="LAVATELASMANOS"/>
+<edge source="QuedateEnCasa" target="solteroconsolidado"/>
+<edge source="QuedateEnCasa" target="stop"/>
+<edge source="QuedateEnCasa" target="timeout"/>
+<edge source="FelizDomingo" target="PuertoMorelos"/>
+<edge source="covid_19" target="gelantibacterial"/>
+<edge source="covid_19" target="salud"/>
+<edge source="covid_19" target="imss"/>
+<edge source="covid_19" target="cuernavaca"/>
+<edge source="covid_19" target="piel"/>
+<edge source="covid_19" target="cuarentena"/>
+<edge source="covid_19" target="encasa"/>
+<edge source="covid_19" target="yomequedoencasa"/>
+<edge source="covid_19" target="pediatria"/>
+<edge source="covid_19" target="sanluispotosi"/>
+<edge source="covid_19" target="slp"/>
+<edge source="covid_19" target="quedateencasa"/>
+<edge source="covid_19" target="day1"/>
+<edge source="covid_19" target="stayhome"/>
+<edge source="gelantibacterial" target="salud"/>
+<edge source="gelantibacterial" target="imss"/>
+<edge source="gelantibacterial" target="cuernavaca"/>
+<edge source="gelantibacterial" target="piel"/>
+<edge source="salud" target="imss"/>
+<edge source="salud" target="cuernavaca"/>
+<edge source="salud" target="piel"/>
+<edge source="imss" target="cuernavaca"/>
+<edge source="imss" target="piel"/>
+<edge source="cuernavaca" target="piel"/>
+<edge source="Covid" target="Entérate"/>
+<edge source="SanaDistancia" target="Covid_19mx"/>
+<edge source="SanaDistancia" target="COVIDー19mx"/>
+<edge source="SanaDistancia" target="GobiernoFederal"/>
+<edge source="Covid_19mx" target="Monclova"/>
+<edge source="Covid_19mx" target="QuédateEnCasa"/>
+<edge source="Covid_19mx" target="Edomex"/>
+<edge source="Covid_19mx" target="EdomexPrevencion"/>
+<edge source="Covid_19mx" target="Caasim"/>
+<edge source="Covid_19mx" target="Pachuca"/>
+<edge source="Covid_19mx" target="EllaNoTeAma"/>
+<edge source="ElCacas" target="CrimenesDeLesaHumanidad"/>
+<edge source="ElCacas" target="LopezNosEstaMatando"/>
+<edge source="CrimenesDeLesaHumanidad" target="LopezNosEstaMatando"/>
+<edge source="pandemia" target="cdmx"/>
+<edge source="creer" target="PandemiaMundial"/>
+<edge source="PandemiaMundial" target="Corrupcion"/>
+<edge source="PandemiaMundial" target="Venezuela"/>
+<edge source="PandemiaMundial" target="COVIDVenezuela"/>
+<edge source="StayAtHome" target="StayHome"/>
+<edge source="StayAtHome" target="Homeoffice"/>
+<edge source="StayAtHome" target="work"/>
+<edge source="StayAtHome" target="YoMeQuedoEnCasa"/>
+<edge source="StayAtHome" target="CuarentenaPorLaVida"/>
+<edge source="StayAtHome" target="CoronaCrisis"/>
+<edge source="StayHome" target="Homeoffice"/>
+<edge source="StayHome" target="work"/>
+<edge source="StayHome" target="YoMeQuedoEnCasa"/>
+<edge source="Homeoffice" target="work"/>
+<edge source="Homeoffice" target="YoMeQuedoEnCasa"/>
+<edge source="Homeoffice" target="solteroconsolidado"/>
+<edge source="work" target="YoMeQuedoEnCasa"/>
+<edge source="YoMeQuedoEnCasa" target="SabadoDeGanarSeguidores"/>
+<edge source="indiegame" target="gamedev"/>
+<edge source="cuarentena" target="encasa"/>
+<edge source="cuarentena" target="yomequedoencasa"/>
+<edge source="cuarentena" target="beer"/>
+<edge source="cuarentena" target="quedateencasa"/>
+<edge source="cuarentena" target="BuenosDiasATodos"/>
+<edge source="cuarentena" target="FelizSabado"/>
+<edge source="cuarentena" target="AmloRidículo"/>
+<edge source="cuarentena" target="PeligroParaMexico"/>
+<edge source="cuarentena" target="CoronaCrisis"/>
+<edge source="cuarentena" target="ToqueDeQueda"/>
+<edge source="cuarentena" target="quedateEnTuCasa"/>
+<edge source="Dia6" target="FelizSabado"/>
+<edge source="encasa" target="yomequedoencasa"/>
+<edge source="MeQuedoEnCasa" target="COVID19mexico"/>
+<edge source="COVID19mexico" target="SabadoDeGanarSeguidores"/>
+<edge source="COVID19mexico" target="confinamiento"/>
+<edge source="COVID19mexico" target="CoronaCrisis"/>
+<edge source="COVID19mexico" target="Coronavirusmexico"/>
+<edge source="COVID19mexico" target="elcacas"/>
+<edge source="COVID19mexico" target="ConLosNinosNo"/>
+<edge source="virus" target="desigualdad"/>
+<edge source="virus" target="capitalismo"/>
+<edge source="desigualdad" target="capitalismo"/>
+<edge source="ÚLTIMAHORA" target="COAHUILA"/>
+<edge source="ÚLTIMAHORA" target="Saltillo"/>
+<edge source="COAHUILA" target="Saltillo"/>
+<edge source="COVID_19" target="Coahuila"/>
+<edge source="covid19" target="EdoMex"/>
+<edge source="covid19" target="meganoticias"/>
+<edge source="EdoMex" target="meganoticias"/>
+<edge source="FelizSábado" target="SerFieraEsUnOrgullo"/>
+<edge source="FelizSábado" target="JugamosEnCasa"/>
+<edge source="SerFieraEsUnOrgullo" target="JugamosEnCasa"/>
+<edge source="CuarentenaPorLaVida" target="CoronaCrisis"/>
+<edge source="CoronaCrisis" target="confinamiento"/>
+<edge source="CoronaCrisis" target="Coronavirusmexico"/>
+<edge source="CoronaCrisis" target="ToqueDeQueda"/>
+<edge source="CoronaCrisis" target="quedateEnTuCasa"/>
+<edge source="CoronaCrisis" target="ElPeorGobiernoDeLaHistoria"/>
+<edge source="SusanaDistancia" target="photo"/>
+<edge source="SusanaDistancia" target="Detente"/>
+<edge source="FelizSabado" target="21deMarzo"/>
+<edge source="FelizSabado" target="Cozumel"/>
+<edge source="FelizSabado" target="AislamientoObligatorio"/>
+<edge source="FelizSabado" target="BuenosDiasATodos"/>
+<edge source="FelizSabado" target="AmloRidículo"/>
+<edge source="FelizSabado" target="PeligroParaMexico"/>
+<edge source="starbucksmexico" target="Alsea"/>
+<edge source="starbucksmexico" target="LeyFederalDelTrabajo"/>
+<edge source="Alsea" target="LeyFederalDelTrabajo"/>
+<edge source="pendejazo" target="Gobernador"/>
+<edge source="pendejazo" target="Aguascalientes"/>
+<edge source="Gobernador" target="Aguascalientes"/>
+<edge source="culona" target="CulonaVirus"/>
+<edge source="21deMarzo" target="Cozumel"/>
+<edge source="Tlaxcala" target="COVIDー19mx"/>
+<edge source="Tlaxcala" target="Nomames"/>
+<edge source="COVIDー19mx" target="Nomames"/>
+<edge source="COVIDー19mx" target="GobiernoFederal"/>
+<edge source="COVID19mx" target="Coronavirusmexico"/>
+<edge source="Notiexprés" target="Edoméx"/>
+<edge source="Edoméx" target="QueNoSeTePase"/>
+<edge source="latam" target="ComunicacióndeValor"/>
+<edge source="Mexico" target="4T"/>
+<edge source="México" target="SigloXXI"/>
+<edge source="México" target="Historia"/>
+<edge source="Primavera2020" target="D"/>
+<edge source="Campeche" target="Transporte"/>
+<edge source="Edomex" target="EdomexPrevencion"/>
+<edge source="7Noviembre2020" target="Casiseñores"/>
+<edge source="7Noviembre2020" target="Lovers"/>
+<edge source="Casiseñores" target="Lovers"/>
+<edge source="pediatria" target="sanluispotosi"/>
+<edge source="pediatria" target="slp"/>
+<edge source="sanluispotosi" target="slp"/>
+<edge source="Noticias" target="Coronavirus"/>
+<edge source="Coronavirusmexico" target="confinamiento"/>
+<edge source="AMLO" target="YoTeAdmiroAMLO"/>
+<edge source="elcacas" target="ConLosNinosNo"/>
+<edge source="EnCasaConLos40" target="NetflixParty"/>
+<edge source="Zacatecas" target="SCTInforma"/>
+<edge source="Zacatecas" target="Medicina"/>
+<edge source="SCTInforma" target="Medicina"/>
+<edge source="oracreeactua" target="IASMRegiiomontana"/>
+<edge source="oracreeactua" target="IASD"/>
+<edge source="IASMRegiiomontana" target="IASD"/>
+<edge source="NuevoLeon" target="NLextraordinario"/>
+<edge source="stop" target="timeout"/>
+<edge source="SigloXXI" target="Historia"/>
+<edge source="GelAntibacterial" target="cubrebocas"/>
+<edge source="Salud" target="Healthcare"/>
+<edge source="BuenosDiasATodos" target="AmloRidículo"/>
+<edge source="BuenosDiasATodos" target="PeligroParaMexico"/>
+<edge source="AmloRidículo" target="PeligroParaMexico"/>
+<edge source="Corrupcion" target="Venezuela"/>
+<edge source="Corrupcion" target="COVIDVenezuela"/>
+<edge source="Venezuela" target="COVIDVenezuela"/>
+<edge source="day1" target="stayhome"/>
+<edge source="ToqueDeQueda" target="quedateEnTuCasa"/>
+<edge source="ToqueDeQueda" target="CuarentenaTotal"/>
+<edge source="ToqueDeQueda" target="Dia5deCuarentena"/>
+<edge source="Pachuca" target="Caasim"/>
+<edge source="ELCACAS" target="ELCACASNOPUEDE"/>
+<edge source="CuarentenaTotal" target="Dia5deCuarentena"/>
+</graph></graphml>
