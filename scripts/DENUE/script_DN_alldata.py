@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
-
+# In[]
 # _____DENUE API:   ______#
 
 # Autor:
@@ -282,7 +282,7 @@ class DENUE():
             print('Estatus de la petición: {}'.format(response.status_code))
         else:
             print('Algo salió mal. Intentalo de nuevo')
-        return dfItem, jsonObj
+        return jsonObj, dfItem
 
     def Extract_denue(self,keyword,entidad,radio):
         near = str(entidad)
