@@ -13,7 +13,9 @@ import sqlalchemy
 import pandas as pd
 import numpy as np
 import requests
+import geopy
 import json
+import time
 import sys
 
 ################################################################################
@@ -113,8 +115,14 @@ def get_table_data(conn, primary_keys, table_name):
 
 
 def get_latlon(near):
-    geocod = geolocator.geocode(near)
-    return geocod.latitude, geocod.longitude
+    while True:
+        try:
+            geocod = geolocator.geocode(near)
+            return geocod.latitude, geocod.longitude
+        except geopy.exc.GeocoderTimedOut:
+            print('Geocodier Timed Out, Retry')
+            time.sleep(1)
+            continue
 
 
 def row_builder(data, columns_data):
@@ -787,20 +795,24 @@ class GooglePlaces():
             'key': self.api_key,
             'keyword': keyword,
             'radius': radius,
-            'll': ll
+            'location': ll
         }
         if gtype:
             params['type'] = gtype
-
+            
         places = list()
         while True:
-            try:
-                res = requests.get(endpoint_url, params=params).json()
-                places.extend(res['results'])
+            res = requests.get(endpoint_url, params=params).json()
+            places.extend(res['results'])
+            if res['status'] != 'OK':
+                print('\t> Google Places error: ', res['status'])
+                return
+            if 'next_page_token' in res.keys():
                 params['pagetoken'] = res['next_page_token']
-            except KeyError:
-                break
-        print('\t> Places found: ', len(places))
+                time.sleep(1.8)
+                continue
+            break
+        print('\t> Google Places found: ', len(places))
         if len(places) == 0:
             return
         SQL_query = "SELECT place_id FROM tb_gp_places"

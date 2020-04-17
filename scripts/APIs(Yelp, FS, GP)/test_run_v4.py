@@ -42,7 +42,8 @@ def init_apis(database='local'):
     yp_client = apis.Yelp(dbengine, conn, api_key)
 
     # Google Places
-    api_key = "AIzaSyBKsZ5sZW_1VouFlIxGGeZgCUDjPAG_6sI"
+    #api_key = "AIzaSyBKsZ5sZW_1VouFlIxGGeZgCUDjPAG_6sI"
+    api_key = "AIzaSyDxaHK22iSNZfykNKQ4Ak-Q8EwpcPHnem4"
     gp_client = apis.GooglePlaces(dbengine, conn, api_key)
 
     # Denue
@@ -92,8 +93,9 @@ if __name__ == "__main__":
     ]
 
     for kw in kwords:
+        break
         print('\nBuscando: ',kw)
         search_apis(near='Ciudad de Mexico', query=kw, radius=2000)
 
     # Si todo corre bien, la siguiente linea carga los datos a csv por tabla.
-    # editor.alltables2csv()
+    editor.alltables2csv()
