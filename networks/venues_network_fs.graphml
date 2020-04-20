@@ -1,0 +1,217 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><graph edgedefault="undirected"><node id="Hilaria Gastrobar"/>
+<node id="Hostería La Bota"/>
+<node id="Pizza del Perro Negro"/>
+<node id="El Depósito"/>
+<node id="El Cuatro 20"/>
+<node id="Terraza Regina"/>
+<node id="La Gioconda"/>
+<node id="El 4 20"/>
+<node id="El Mexicano"/>
+<node id="Salón Corona"/>
+<node id="Jerónimas"/>
+<node id="la cumbancha"/>
+<node id="Hilaria Jardín"/>
+<node id="Bósforo Mezcalería"/>
+<node id="Rush Pool Beer &amp; Snack"/>
+<node id="Bar Mancera"/>
+<node id="La Botica"/>
+<node id="Tálisman de Motolinia"/>
+<node id="Pasagüero"/>
+<node id="La Purísima"/>
+<node id="El Marra Salón"/>
+<node id="Taquería El Abanico"/>
+<node id="El Bebian Beer Lodge"/>
+<node id="Valiant Pub"/>
+<node id="La Vaquita"/>
+<node id="Downtown México"/>
+<node id="Cantina Tio Pepe"/>
+<node id="El Zaguan"/>
+<node id="Café de Tacuba"/>
+<node id="Centro Histórico"/>
+<node id="Snacks La Cabaña"/>
+<node id="Cervecería Vista Hermosa"/>
+<node id="El Acapulco"/>
+<node id="Rock Son Centro"/>
+<node id="La Vitrina"/>
+<node id="Los Canallas"/>
+<node id="La Mandragora"/>
+<node id="The Beer Company Centro Histórico"/>
+<node id="La Que Manda"/>
+<node id="Regina 18"/>
+<node id="Pizza 'N Love"/>
+<node id="Un Buen Tiempo"/>
+<node id="Cerveza Artesanal Tepito"/>
+<node id="Río de la Plata"/>
+<node id="El Cafe De Enmedio"/>
+<node id="La Faena"/>
+<node id="Pizzeria Mala Saña"/>
+<node id="Terraza Madero"/>
+<node id="Antonella Pizza"/>
+<node id="La India"/>
+<node id="La Hija del Pirata"/>
+<node id="La Cumbacha"/>
+<node id="Pakaly"/>
+<node id="Salón Sol"/>
+<node id="El Aljibe"/>
+<node id="Café Bar-celona Mezcalera"/>
+<node id="Viena Bar"/>
+<node id="Surtidora Don Batiz"/>
+<node id="Portales De Tlaquepaque"/>
+<node id="La Camarita"/>
+<node id="El Gallo de Oro"/>
+<node id="Cantina Salón Madrid"/>
+<node id="El jarrito"/>
+<node id="Club Atlántico"/>
+<node id="café bar celona"/>
+<node id="La vecindad"/>
+<node id="Cafe Del Jardin"/>
+<node id="Al otro lado del rio"/>
+<node id="Pozoleria Goyo"/>
+<node id="Deck Burger, Pizza &amp; Wings"/>
+<node id="La Única de Motolinía"/>
+<node id="El Mal Paso"/>
+<node id="The Valium Club"/>
+<node id="Milanesas grill"/>
+<node id="La Rayuela (Plaza De La Solidaridad)"/>
+<node id="Restaurante Don Toribio"/>
+<node id="Gastronómica San Juan"/>
+<node id="Café de letras"/>
+<node id="Plaza Garibaldi"/>
+<node id="La Selvita"/>
+<node id="Centro Cultural El Cerrojo"/>
+<node id="Los Vegetarianos"/>
+<node id="Antojitos Gante II"/>
+<node id="El Sausalito"/>
+<node id="Hostal Catedral"/>
+<node id="Terraza XX"/>
+<node id="Alameda DF"/>
+<node id="Abadía"/>
+<node id="Xoloitzcuintle"/>
+<node id="Barro Mestizo"/>
+<node id="Celtics Pub Alameda"/>
+<node id="Pozoleria El Sabor De Mexico"/>
+<node id="El Mundano"/>
+<node id="casa santa anna"/>
+<node id="Fu Sheng"/>
+<node id="Patio Container"/>
+<node id="Barriga's Llena."/>
+<node id="BSTRDS_PIZZA"/>
+<node id="Tacos Arandas"/>
+<node id="D'10&amp;Seis"/>
+<node id="Wing Stop Alameda"/>
+<node id="Vive La Pizza"/>
+<node id="Mixtlan Foro Cultural"/>
+<node id="restaurant las cumbres (Vianney)"/>
+<edge source="Hilaria Gastrobar" target="Bósforo Mezcalería"/>
+<edge source="Hostería La Bota" target="Pizza del Perro Negro"/>
+<edge source="Hostería La Bota" target="Café de Tacuba"/>
+<edge source="Pizza del Perro Negro" target="Café de Tacuba"/>
+<edge source="El Depósito" target="Jerónimas"/>
+<edge source="El Cuatro 20" target="La Purísima"/>
+<edge source="El Cuatro 20" target="La Vitrina"/>
+<edge source="Terraza Regina" target="Café de letras"/>
+<edge source="La Gioconda" target="El 4 20"/>
+<edge source="El Mexicano" target="La Botica"/>
+<edge source="El Mexicano" target="El Bebian Beer Lodge"/>
+<edge source="El Mexicano" target="Snacks La Cabaña"/>
+<edge source="El Mexicano" target="Centro Cultural El Cerrojo"/>
+<edge source="Salón Corona" target="la cumbancha"/>
+<edge source="Salón Corona" target="Hilaria Jardín"/>
+<edge source="Salón Corona" target="Cerveza Artesanal Tepito"/>
+<edge source="Salón Corona" target="La Que Manda"/>
+<edge source="Salón Corona" target="Río de la Plata"/>
+<edge source="la cumbancha" target="Hilaria Jardín"/>
+<edge source="la cumbancha" target="Cerveza Artesanal Tepito"/>
+<edge source="Hilaria Jardín" target="Cerveza Artesanal Tepito"/>
+<edge source="Bar Mancera" target="Tálisman de Motolinia"/>
+<edge source="Bar Mancera" target="La Vaquita"/>
+<edge source="Bar Mancera" target="El Cafe De Enmedio"/>
+<edge source="La Botica" target="El Bebian Beer Lodge"/>
+<edge source="La Botica" target="Snacks La Cabaña"/>
+<edge source="La Botica" target="Centro Cultural El Cerrojo"/>
+<edge source="Tálisman de Motolinia" target="La Vaquita"/>
+<edge source="Tálisman de Motolinia" target="El Cafe De Enmedio"/>
+<edge source="Pasagüero" target="Los Canallas"/>
+<edge source="Pasagüero" target="La Hija del Pirata"/>
+<edge source="Pasagüero" target="El Sausalito"/>
+<edge source="Pasagüero" target="Alameda DF"/>
+<edge source="La Purísima" target="La Vitrina"/>
+<edge source="El Marra Salón" target="El Zaguan"/>
+<edge source="El Marra Salón" target="Pakaly"/>
+<edge source="Taquería El Abanico" target="Centro Histórico"/>
+<edge source="El Bebian Beer Lodge" target="Snacks La Cabaña"/>
+<edge source="El Bebian Beer Lodge" target="Centro Cultural El Cerrojo"/>
+<edge source="Valiant Pub" target="Cantina Tio Pepe"/>
+<edge source="Valiant Pub" target="Plaza Garibaldi"/>
+<edge source="La Vaquita" target="El Cafe De Enmedio"/>
+<edge source="Downtown México" target="Gastronómica San Juan"/>
+<edge source="Cantina Tio Pepe" target="Plaza Garibaldi"/>
+<edge source="El Zaguan" target="Pakaly"/>
+<edge source="Snacks La Cabaña" target="Centro Cultural El Cerrojo"/>
+<edge source="Cervecería Vista Hermosa" target="El Acapulco"/>
+<edge source="Cervecería Vista Hermosa" target="La Mandragora"/>
+<edge source="Cervecería Vista Hermosa" target="Pizza 'N Love"/>
+<edge source="Cervecería Vista Hermosa" target="Antojitos Gante II"/>
+<edge source="El Acapulco" target="La Mandragora"/>
+<edge source="El Acapulco" target="Pizza 'N Love"/>
+<edge source="El Acapulco" target="Antojitos Gante II"/>
+<edge source="Rock Son Centro" target="La Cumbacha"/>
+<edge source="Rock Son Centro" target="Terraza XX"/>
+<edge source="Rock Son Centro" target="Abadía"/>
+<edge source="Rock Son Centro" target="Pozoleria El Sabor De Mexico"/>
+<edge source="Los Canallas" target="La Hija del Pirata"/>
+<edge source="Los Canallas" target="El Sausalito"/>
+<edge source="Los Canallas" target="Alameda DF"/>
+<edge source="La Mandragora" target="Pizza 'N Love"/>
+<edge source="La Mandragora" target="Antojitos Gante II"/>
+<edge source="The Beer Company Centro Histórico" target="Los Vegetarianos"/>
+<edge source="The Beer Company Centro Histórico" target="Celtics Pub Alameda"/>
+<edge source="La Que Manda" target="Río de la Plata"/>
+<edge source="Regina 18" target="Café Bar-celona Mezcalera"/>
+<edge source="Regina 18" target="El Gallo de Oro"/>
+<edge source="Regina 18" target="Cantina Salón Madrid"/>
+<edge source="Pizza 'N Love" target="Antojitos Gante II"/>
+<edge source="Un Buen Tiempo" target="Hostal Catedral"/>
+<edge source="La Faena" target="Terraza Madero"/>
+<edge source="Pizzeria Mala Saña" target="Antonella Pizza"/>
+<edge source="Pizzeria Mala Saña" target="Salón Sol"/>
+<edge source="Antonella Pizza" target="Salón Sol"/>
+<edge source="La India" target="Patio Container"/>
+<edge source="La Hija del Pirata" target="El Sausalito"/>
+<edge source="La Hija del Pirata" target="Alameda DF"/>
+<edge source="La Cumbacha" target="Terraza XX"/>
+<edge source="La Cumbacha" target="Abadía"/>
+<edge source="La Cumbacha" target="Pozoleria El Sabor De Mexico"/>
+<edge source="El Aljibe" target="Viena Bar"/>
+<edge source="El Aljibe" target="El Mundano"/>
+<edge source="Café Bar-celona Mezcalera" target="El Gallo de Oro"/>
+<edge source="Café Bar-celona Mezcalera" target="Cantina Salón Madrid"/>
+<edge source="Viena Bar" target="El Mundano"/>
+<edge source="Surtidora Don Batiz" target="Portales De Tlaquepaque"/>
+<edge source="Surtidora Don Batiz" target="Club Atlántico"/>
+<edge source="Surtidora Don Batiz" target="Wing Stop Alameda"/>
+<edge source="Portales De Tlaquepaque" target="Club Atlántico"/>
+<edge source="Portales De Tlaquepaque" target="Wing Stop Alameda"/>
+<edge source="La Camarita" target="El jarrito"/>
+<edge source="La Camarita" target="casa santa anna"/>
+<edge source="La Camarita" target="BSTRDS_PIZZA"/>
+<edge source="El Gallo de Oro" target="Cantina Salón Madrid"/>
+<edge source="El jarrito" target="casa santa anna"/>
+<edge source="El jarrito" target="BSTRDS_PIZZA"/>
+<edge source="Club Atlántico" target="Wing Stop Alameda"/>
+<edge source="café bar celona" target="The Valium Club"/>
+<edge source="La vecindad" target="La Única de Motolinía"/>
+<edge source="Cafe Del Jardin" target="Fu Sheng"/>
+<edge source="Cafe Del Jardin" target="Barriga's Llena."/>
+<edge source="Pozoleria Goyo" target="Vive La Pizza"/>
+<edge source="El Mal Paso" target="La Rayuela (Plaza De La Solidaridad)"/>
+<edge source="Los Vegetarianos" target="Celtics Pub Alameda"/>
+<edge source="El Sausalito" target="Alameda DF"/>
+<edge source="Terraza XX" target="Abadía"/>
+<edge source="Terraza XX" target="Pozoleria El Sabor De Mexico"/>
+<edge source="Abadía" target="Pozoleria El Sabor De Mexico"/>
+<edge source="Xoloitzcuintle" target="Barro Mestizo"/>
+<edge source="casa santa anna" target="BSTRDS_PIZZA"/>
+<edge source="Fu Sheng" target="Barriga's Llena."/>
+</graph></graphml>

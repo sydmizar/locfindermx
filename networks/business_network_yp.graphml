@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><graph edgedefault="undirected"><node id="El Vilsito"/>
+<node id="Nibelungengarten"/>
+<node id="Casquet"/>
+<node id="Agua purificada Layf"/>
+<node id="Beer Bros"/>
+<node id="Cervecería La Victoria"/>
+<node id="Fonda Argentina"/>
+<node id="Hop The Beer Experience 2"/>
+<node id="Está Krbón"/>
+<node id="Cine Tonalá"/>
+<node id="Pinche Gringo BBQ"/>
+<node id="La Casa de Toño"/>
+<node id="Central de Pizzas"/>
+<node id="Henry Sailor"/>
+<edge source="El Vilsito" target="Pinche Gringo BBQ"/>
+<edge source="Nibelungengarten" target="Cine Tonalá"/>
+<edge source="Nibelungengarten" target="Central de Pizzas"/>
+<edge source="Nibelungengarten" target="Henry Sailor"/>
+<edge source="Casquet" target="Cervecería La Victoria"/>
+<edge source="Cine Tonalá" target="Central de Pizzas"/>
+<edge source="Cine Tonalá" target="Henry Sailor"/>
+<edge source="Central de Pizzas" target="Henry Sailor"/>
+</graph></graphml>
