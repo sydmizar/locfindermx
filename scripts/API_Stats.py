@@ -20,7 +20,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 np.set_printoptions(threshold=sys.maxsize)
 
 tablas =[]
-pathlist = Path('tablas').glob('**/*.csv')
+pathlist = Path('stats/tablas').glob('**/*.csv')
 for path in pathlist:
      path_in_str = str(path)
      data= pd.read_csv(path_in_str)
