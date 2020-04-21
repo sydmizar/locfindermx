@@ -18,7 +18,7 @@ import operator
 from nltk.tokenize import RegexpTokenizer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 np.set_printoptions(threshold=sys.maxsize)
-# %%
+
 tablas =[]
 pathlist = Path('tablas').glob('**/*.csv')
 for path in pathlist:
@@ -27,8 +27,6 @@ for path in pathlist:
      tablas.append(data)
      print(path_in_str)
 
-
-# %%
 def YELP():
      # _______________ YELP Bussiness_____________________
      ylp = tablas[0]
@@ -106,8 +104,6 @@ def YELP():
      print(df)
      df.to_excel("Stats_Yelp.xlsx")
      
-
-# %%
 def FRSQ():
      # ______________ FOURSQUARE_photo_____________________
      fs_ph = tablas[1]
@@ -191,23 +187,145 @@ def FRSQ():
      # Data Frame Exportado
      data = {'Parámetros':  param,'Valor': val}
 
-     df2 = pd.DataFrame (data, columns = ['Parámetros','Valor'])
-     df2.to_excel("Stats_Frsq.xlsx")
+     df = pd.DataFrame (data, columns = ['Parámetros','Valor'])
+     df.to_excel("Stats_Frsq.xlsx")
 
+def DENUE():
 
+     # _______________ DENUE _____________________
+     dn = tablas[4]
+     param= []
+     val=[]
 
+     # Lugares Encontrados
+     param.append('Establecimientos Encontrados')
+     val.append(dn['Id'].count())
+
+     # Nombres Encontrados
+     freqDist = FreqDist(dn['Nombre'].dropna())
+     param.append('Nombre de Establecimiento más Frecuente')
+     val.append(max(freqDist.items(), key=operator.itemgetter(1))[0])
+     # RS de Mayor Frecuencia
+     freqDist = FreqDist(dn['Razon_social'].dropna())
+     param.append('Razón Social más Frecuente')
+     val.append(max(freqDist.items(), key=operator.itemgetter(1))[0])
+
+     # CA de Mayor Frecuencia
+     freqDist = FreqDist(dn['Clase_actividad'].dropna())
+     param.append('Clase o Actividad más Frecuente')
+     val.append(max(freqDist.items(), key=operator.itemgetter(1))[0])
+
+     # Estrato de Mayor Frecuencia
+     freqDist = FreqDist(dn['Estrato'].dropna())
+     param.append('Estrato de Mayor más Frecuente')
+     val.append(max(freqDist.items(), key=operator.itemgetter(1))[0])
+
+     # Tipo de Vialidad de Mayor Frecuencia
+     freqDist = FreqDist(dn['Tipo_vialidad'].dropna())
+     param.append('Tipo de Vialidad más Frecuente')
+     val.append(max(freqDist.items(), key=operator.itemgetter(1))[0])
+
+     # Colonia de Mayor Frecuencia
+     freqDist = FreqDist(dn['Colonia'].dropna())
+     param.append('Colonia más Frecuente')
+     val.append(max(freqDist.items(), key=operator.itemgetter(1))[0])
+
+     # Tipo de Mayor Frecuencia
+     freqDist = FreqDist(dn['Tipo'].dropna())
+     param.append('Tipo de establecimiento más Frecuente')
+     val.append(max(freqDist.items(), key=operator.itemgetter(1))[0])
+
+     # Centro Comercial de Mayor Frecuencia
+     freqDist = FreqDist(dn['CentroComercial'].dropna())
+     param.append('Centro Comercia más Frecuente')
+     val.append(max(freqDist.items(), key=operator.itemgetter(1))[0])
+
+     # Tipo de Centro Comercial de Mayor Frecuencia
+     freqDist = FreqDist(dn['TipoCentroComercial'].dropna())
+     param.append('Tipo de Centro Comercia más Frecuente')
+     val.append(max(freqDist.items(), key=operator.itemgetter(1))[0])
+
+     # Corredor Industrial de Mayor Frecuencia
+     freqDist = FreqDist(dn['nom_corredor_industrial'])
+     param.append('Corredor Industrial más Frecuente')
+     val.append(max(freqDist.items(), key=operator.itemgetter(1))[0])
+
+     # Tipo de Centro Comercial de Mayor Frecuencia
+     freqDist = FreqDist(dn['tipo_corredor_industrial'])
+     param.append('Tipo de Corredor Industrial más Frecuente')
+     val.append(max(freqDist.items(), key=operator.itemgetter(1))[0])
+
+     # Data Frame Exportado
+     data = {'Parámetros':  param,'Valor': val}
+     df = pd.DataFrame (data, columns = ['Parámetros','Valor'])
+     df.to_excel("Stats_Denue.xlsx")
+
+def GP():
+     # _______________ Google Places _____________________
+     gp = tablas[5]
+     param= []
+     val=[]
+
+     # Lugares Encontrados
+     param.append('Establecimientos Encontrados')
+     val.append(gp['id'].count())
+
+     # Nombres Encontrados
+     freqDist = FreqDist(gp['name'].dropna())
+     param.append('Nombre de Establecimiento más Frecuente')
+     val.append(max(freqDist.items(), key=operator.itemgetter(1))[0])
+
+     # Rating de Precio más frecuente
+     freqDist = FreqDist(gp['price_level'].dropna())
+     param.append(' Nivel de Precio más Frecuente')
+     val.append(max(freqDist.items(), key=operator.itemgetter(1))[0])
+          
+     # Nivel  de Precio
+     param.append('Mayor Nivel de Precio')
+     val.append(gp['price_level'].dropna().max())
+
+     param.append('Menor Nivel de Precio')
+     val.append(gp['price_level'].dropna().min())
+
+     param.append('Nivel de Precio Promedio ')
+     val.append(gp['price_level'].dropna().mean())
+
+     # Ratings de lugar
+     param.append('Mayor Califiación Asignada')
+     val.append(gp['rating'].dropna().max())
+
+     param.append('Menor Calificación Asignada')
+     val.append(gp['rating'].dropna().min())
+
+     param.append('Promedio de Calificaciones')
+     val.append(gp['rating'].dropna().mean())
+
+     # Ratings de por usuario
+     param.append('Mayor Num de calificaciones  por usuario')
+     val.append(gp['user_ratings_total'].dropna().max())
+
+     param.append('Menor Num de calificaciones  por usuario')
+     val.append(gp['user_ratings_total'].dropna().min())
+
+     param.append('Promedio de Calificaciones por usuario')
+     val.append(gp['user_ratings_total'].dropna().mean())
+
+     # Tipo de Vialidad de Mayor Frecuencia
+     freqDist = FreqDist(gp['types'].dropna())
+     param.append('Tags más Frecuentes')
+     val.append(max(freqDist.items(), key=operator.itemgetter(1))[0])
+
+     # Data Frame Exportado
+     data = {'Parámetros':  param,'Valor': val}
+     df = pd.DataFrame (data, columns = ['Parámetros','Valor'])
+     df.to_excel("Stats_GPlaces.xlsx")
+
+def main():
+     YELP()
+     FRSQ()
+     DENUE()
+     GP()
+     pass
 # %%
-
-# %%
-data = {'Parámetros':  param,'Valor': val}
-
-df3 = pd.DataFrame (data, columns = ['Parámetros','Valor'])
-#df2.to_excel("Stats_Frsq.xlsx")
-
-df3
-
-# %%
-YELP()
-
-
-# %%
+# __________ Main____________
+main()
